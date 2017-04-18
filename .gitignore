@@ -1,0 +1,6 @@
+*.py[cod]
+__pycache__
+*.tmp
+*.swp
+*.log
+keys.json
