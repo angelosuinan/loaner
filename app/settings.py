@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_extensions',
+    'rest_framework',
+    'loans',
 ]
 
 MIDDLEWARE = [
@@ -128,6 +130,14 @@ STATICFILES_DIRS = [
                                                             ]
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+# REST_Framework config
+REST_FRAMEWORK = {
+        # Use Django's standard `django.contrib.auth` permissions,
+        # or allow read-only access for unauthenticated users.
+        'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+        ]
+        }
 # Heroku configs
 """
 import dj_database_url
