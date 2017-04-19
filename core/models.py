@@ -18,10 +18,17 @@ payment_methods=(
                         ('SEMI-ANNUALLY', 'SEMI-ANNUALLY'),
                                 ('ANUALLY', 'ANNUALLY'),
                                         )
+class Installment(Base):
+    date_paid = models.DateField(blank=True,null=True)
+    price = models.DecimalField(max_digits=1000,decimal_places=2,default=Decimal('0'))
+    def __str__(self):
+        return str(self.date_paid) + ": " + str(self.price)
 class LoanBase(Base):
-    due_date = models.DateTimeField(blank=True, null=True, auto_now_add=True)
-    balance = models.DecimalField(max_digits=1000, decimal_places=2, default=Decimal('0'))
+    due_date = models.DateField(blank=True, null=True, auto_now_add=True)
     loanee = models.CharField(max_length=300, default="admin")
     payment =models.CharField(max_length=100, choices=payment_methods,
                                                             default='MONTHLY')
+    installment = models.ForeignKey(Installment ,
+            on_delete=models.CASCADE, blank=True, null=True)
+    balance = models.DecimalField(max_digits=1000, decimal_places=2, default=Decimal('0'))
 
