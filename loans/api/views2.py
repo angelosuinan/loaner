@@ -13,10 +13,15 @@ from collections import OrderedDict
 class MortgageList(APIView):
     def get(self, request, format=None):
        # return HttpResponse("<html><body>It is now %s.</body></html>")
-        loan = Mortgage.objects.all()
-        serializer = MortgageSerializer(loan, many = True) #TO inherit
-        content = JSONRenderer().render(serializer.data)
-        return Response(serializer.data)
+        if request.user.is_authenticated():
+            username = request.user.username
+            M = Mortgage.objects.filter(loanee=username)
+            import pdb
+            pdb.set_trace()
+            serializer = MortgageSerializer(M, many = True) #TO inherit
+            content = JSONRenderer().render(serializer.data)
+            return Response(serializer.data)
+        return HttResponse("LOGIN FIRST")
     def post(self, request, format=None):
         serializer = MortgageSerializer(data = request.data)
         if serializer.is_valid():
