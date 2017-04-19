@@ -4,7 +4,7 @@ from django.db import models
 
 # Create your models here.
 from django.contrib.auth.models import User, Group
-from core.models import Base
+from core.models import Base, LoanBase
 from  decimal import Decimal
 
 payment_methods=(
@@ -16,45 +16,20 @@ users=()
 def get_Users():
     #get all user and put it in options
     pass
-class Mortgage(Base):
-    due_date = models.DateTimeField(blank=True, null=True)
-    balance = models.DecimalField(max_digits=1000, decimal_places=2, default=Decimal('0'))
-    loanee = models.CharField(max_length=300, default="")
-    payment =models.CharField(max_length=100, choices=payment_methods,
-                                default='MONTHLY')
-class StudentLoan(Base):
-    due_date = models.DateTimeField(blank=True, null= True)
-    balance = models.DecimalField(max_digits=1000, decimal_places=2, default=Decimal('0'))
-    loanee = models.CharField(max_length=300, default="")
+class Mortgage(LoanBase):
+    loan_name = models.CharField(max_length=100, default="Mortgage")
 
-    payment =models.CharField(max_length=100, choices=payment_methods,
-                                default='MONTHLY')
-    def __str__(self):
-        return (str(self.loanee))
-class AutoLoan(Base): 
-    due_date = models.DateTimeField(blank=True, null =True)
-    balance = models.DecimalField(max_digits=1000, decimal_places=2, default=Decimal('0'))
-    loanee = models.CharField(max_length=300,default="")
+class StudentLoan(LoanBase):
+    loan_name = models.CharField(max_length=100, default="Student")
+class AutoLoan(LoanBase):
+    loan_name = models.CharField(max_length=100, default="Auto")
+class PersonalLoan(LoanBase):
+    loan_name = models.CharField(max_length=100, default="Personal")
 
-    payment =models.CharField(max_length=100, choices=payment_methods,
-                                default='MONTHLY')
-    def __str__(self):
-        return (str(self.loanee))
-class PersonalLoan(Base):
-    due_date = models.DateTimeField(blank=True, null = True)
-    balance = models.DecimalField(max_digits=1000, decimal_places=2, default=Decimal('0'))
-    payment =models.CharField(max_length=100, choices=payment_methods,
-                                default='MONTHLY')
-    loanee = models.CharField(max_length=300, default="")
+class HouseLoan(LoanBase):
+    loan_name = models.CharField(max_length=100, default="House")
 
-    def __str__(self):
-        return (str(self.loanee))
-class HouseLoan(Base):
-    due_date = models.DateTimeField(blank=True, null = True)
-    balance = models.DecimalField(max_digits=1000, decimal_places=2, default=Decimal('0'))
-    payment =models.CharField(max_length=100, choices=payment_methods,
-                                default='MNT')
-    loanee = models.CharField(max_length=300, default="")
+
 
 class Installments(Base):
     date_paid = models.DateTimeField(blank=True,null=True)
