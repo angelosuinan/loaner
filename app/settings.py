@@ -131,13 +131,11 @@ STATICFILES_DIRS = [
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # REST_Framework config
-REST_FRAMEWORK = {
-        # Use Django's standard `django.contrib.auth` permissions,
-        # or allow read-only access for unauthenticated users.
-        'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-        ]
-        }
+EST_FRAMEWORK = {
+            'DEFAULT_PERMISSION_CLASSES': (
+                        'rest_framework.permissions.DjangoModelPermissions',
+                            )
+            }
 # Heroku configs
 """
 import dj_database_url
