@@ -54,8 +54,9 @@ class HouseLoan(Base):
     payment =models.CharField(max_length=100, choices=payment_methods,
                                 default='MNT')
     def __str__(self):
-        return (str(self.loanee))
-
+        x=[]
+        x[0]=(str(self.loanee))
+        return x
 class Installments(Base):
     date_paid = models.DateTimeField(blank=True,null=True)
     price = models.DecimalField(max_digits=1000,decimal_places=2,default=Decimal('0'))
