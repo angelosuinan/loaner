@@ -16,15 +16,16 @@ class MortgageList(APIView):
         if request.user.is_authenticated():
             username = request.user.username
             M = Mortgage.objects.filter(loanee=username)
-            import pdb
-            pdb.set_trace()
-            serializer = MortgageSerializer(M, many = True) #TO inherit
+            loan = Mortgage.objects.all()
+            serializer = MortgageSerializer(loan, many = True) #TO inherit
             content = JSONRenderer().render(serializer.data)
             return Response(serializer.data)
-        return HttResponse("LOGIN FIRST")
+        return HttpResponse("LOGIN FIRST")
     def post(self, request, format=None):
         serializer = MortgageSerializer(data = request.data)
         if serializer.is_valid():
+            import pdb
+            pdb.set_trace()
             serializer.save()
             return Response (serializer.data,status=status.HTTP_201_CREATED)
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
