@@ -1,44 +1,83 @@
 {% extends 'base.html' %}
 {% block content %}
+<p>
 {% if user.is_authenticated %}
 Welcome {{ user.username }} <!-- insert loguout-->
                         {% endif %}
-                        <p id ="loans">sasdsa</p>
-{% endblock content %}
+</p>
+                        <div id="app"></div>
+                       
+
+                        {% endblock content %}
 
 {% block body_scripts %}
-<script>
-fetch('http://127.0.0.1:8000/list/?format=json') 
-  .then(  
-    function(response) {  
-      if (response.status !== 200) {  
-        console.log('Looks like there was a problem. Status Code: ' +  
-          response.status);  
-        return;  
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <script type="text/babel">
+
+
+    class Loan extends React.Component{
+      render(){
+        const name = "aaaa";
+         var get_json = function(){ axios.get('/list/?format=json')
+          .then(function (response) {
+          $("#l").text( response['data']);
+          console.log(response['data'])
+          var x=0;
+          for (let value of response['data']) {
+            var div = $("<div id='loans-"+x+"'><p>TEst</p></div>");
+            $("#loansdiv").append(div)
+            x++;
+          }
+          var x=0
+          for (let value of response['data']) {
+              var p = $("<p id ='loan_name'>"+value['loan_name']+"</p>");
+              $("#loans-"+x).append(p);
+              var p = $("<p id ='due_date'>"+value['due_date']+"</p>");
+              $("#loans-"+x).append(p);
+              var p = $("<p id ='payment'>"+value['payment']+"</p>");
+              $("#loans-"+x).append(p);
+              var p = $("<p id ='balance'>"+value['balance']+"</p>");
+             $("#loans-"+x).append(p);
+              var p = $("<p id ='installment'>"+value['installment']+"</p>");
+              $("#loans-"+x).append(p);
+              x++
+              }
+          })
+     .catch(function (error) {
+       console.log(error);
+       });
+        }
+
+        return(
+          <div>
+        <h1>It works  {get_json()}{name}</h1>
+        <p id ="l"></p>
+        <div id ="loansdiv"></div>
+        <div id="loan_name_div"></div>
+       
+        </div>
+        );
       }
+    }
 
-      // Examine the text in the response  
-      response.json().then(function(data) {
-          console.log(data);
-          document.getElementById("loans").innerHTML = data;
-      });  
-    }  
-  )  
-  .catch(function(err) {  
-    console.log('Fetch Error :-S', err);  
-  });
+    class Layout extends React.Component{
+      render(){
 
+        return(
+          <div id="container">
+          <Loan />
+          </div>
+          );
+      }
+    }
+ 
+    const app = $("#app")[0];
+    ReactDOM.render(<Layout />, app)
 
-
-/*
-fetch('http://127.0.0.1:8000/list/', {
-  method: 'POST',
-  headers: {
-    'Accept': 'application/json',
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify({
-  })
-})*/
+    
+    
+    
 </script>
 {% endblock body_scripts %}
