@@ -3,12 +3,14 @@ from django.contrib import admin
 # Register your models here.
 
 from .models import Mortgage, StudentLoan, HouseLoan, AutoLoan, PersonalLoan
+
+
 class MortgageAdmin(admin.ModelAdmin):
     list_display = (
             'loanee',
             'due_date',
             'balance',
-            'payment'
+            'payment',
             )
     list_filter = (
             'loanee',
@@ -20,12 +22,20 @@ class MortgageAdmin(admin.ModelAdmin):
             )
     readonly_fields = (
             )
+
+
 class StudentLoanAdmin(MortgageAdmin):
     pass
+
+
 class HouseLoanAdmin(MortgageAdmin):
     pass
+
+
 class AutoLoanAdmin(MortgageAdmin):
     pass
+
+
 class PersonalLoanAdmin(MortgageAdmin):
     pass
 admin.site.register(Mortgage, MortgageAdmin)

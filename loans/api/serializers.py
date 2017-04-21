@@ -6,4 +6,5 @@ from loans.models import Mortgage
 class MortgageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Mortgage
-        fields = ['id','pk','loan_name','due_date','loanee', 'balance','payment','installment']
+        fields = ['pk','loan_name','due_date','loanee',
+                'balance','payment','installment']
