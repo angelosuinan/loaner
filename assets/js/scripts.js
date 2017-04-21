@@ -61,19 +61,32 @@
           );
       }
     }
-    class Layout extends React.Component{
 
+    class Layout extends React.Component{
+      
       render(){
 
         return(
         
           <div >
-
-          <Link to="appyLoan">appyLoan</Link>
-          <Link to="installment">installment</Link>
-           {this.props.children} 
+          <center>
+          <Link to="loan"><button className="btn btn-primary">View Loans</button></Link> &nbsp;
+          <Link to="appyLoan"><button className="btn btn-primary">Apply Loan</button></Link>&nbsp;
+          <Link to="installment"><button className="btn btn-primary">Pay an Installment</button></Link>&nbsp;
+           {this.props.children}
+           </center> 
           </div>
           );
+      }
+    }
+    class Welcome extends React.Component{
+      render(){
+        
+        return(
+        <div>
+        <h1> Welcome</h1>
+        </div>
+        );
       }
     }
  
@@ -88,7 +101,8 @@ var hashHistory = ReactRouter.hashHistory;
     ReactDOM.render(
       <Router history={hashHistory}>
         <Route path="/"  component={Layout}>
-        <IndexRoute component={Loan}></IndexRoute>
+        <IndexRoute component={Welcome}></IndexRoute>
+        <Route path="loan" component={Loan}></Route>
         <Route path="appyLoan" component={AppyLoan}></Route>
         <Route path="installment" component={Installment}></Route>
         </Route>

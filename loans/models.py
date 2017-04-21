@@ -7,6 +7,9 @@ from django.contrib.auth.models import User, Group
 from core.models import Base, LoanBase
 from  decimal import Decimal
 
+
+
+
 payment_methods=(
         ('MONTHLY', 'MONTHLY'),
         ('SEMI-ANNUALLY', 'SEMI-ANNUALLY'),
