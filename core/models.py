@@ -28,6 +28,6 @@ class LoanBase(Base):
     payment =models.CharField(max_length=100, choices=payment_methods,
                                                             default='MONTHLY')
     installment = models.ForeignKey(Installment ,
-            on_delete=models.CASCADE, blank=True, null=True)
+            on_delete=models.CASCADE, blank=True, null=True,default=None)
     balance = models.DecimalField(max_digits=1000, decimal_places=2, default=Decimal('0'))
 

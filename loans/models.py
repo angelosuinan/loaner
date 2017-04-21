@@ -10,6 +10,7 @@ from  decimal import Decimal
 
 
 
+
 payment_methods=(
         ('MONTHLY', 'MONTHLY'),
         ('SEMI-ANNUALLY', 'SEMI-ANNUALLY'),
