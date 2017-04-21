@@ -13,6 +13,8 @@ cssselect==1.0.0
 dj-database-url==0.4.2
 Django==1.10.5
 django-extensions==1.7.7
+django-filter==1.0.2
+djangorestframework==3.6.2
 docker==2.1.0
 docker-compose==1.11.1
 docker-py==1.10.6
@@ -32,12 +34,14 @@ ipaddress==1.0.17
 json-table-schema==0.2.1
 jsonschema==2.6.0
 lxml==3.7.1
+Markdown==2.6.8
 messytables==0.15.2
 packaging==16.8
 parsel==1.1.0
 psycopg2==2.7.1
 pyasn1==0.1.9
 pyasn1-modules==0.0.8
+pycodestyle==2.3.1
 pycparser==2.17
 PyDispatcher==2.0.5
 pyOpenSSL==16.2.0
