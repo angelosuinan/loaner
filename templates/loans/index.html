@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
 <p>
 {% if user.is_authenticated %}
@@ -14,70 +15,8 @@ Welcome {{ user.username }} <!-- insert loguout-->
 
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
-    <script type="text/babel">
 
-
-    class Loan extends React.Component{
-      render(){
-        const name = "aaaa";
-         var get_json = function(){ axios.get('/list/?format=json')
-          .then(function (response) {
-          $("#l").text( response['data']);
-          console.log(response['data'])
-          var x=0;
-          for (let value of response['data']) {
-            var div = $("<div id='loans-"+x+"'><p>TEst</p></div>");
-            $("#loansdiv").append(div)
-            x++;
-          }
-          var x=0
-          for (let value of response['data']) {
-              var p = $("<p id ='loan_name'>"+value['loan_name']+"</p>");
-              $("#loans-"+x).append(p);
-              var p = $("<p id ='due_date'>"+value['due_date']+"</p>");
-              $("#loans-"+x).append(p);
-              var p = $("<p id ='payment'>"+value['payment']+"</p>");
-              $("#loans-"+x).append(p);
-              var p = $("<p id ='balance'>"+value['balance']+"</p>");
-             $("#loans-"+x).append(p);
-              var p = $("<p id ='installment'>"+value['installment']+"</p>");
-              $("#loans-"+x).append(p);
-              x++
-              }
-          })
-     .catch(function (error) {
-       console.log(error);
-       });
-        }
-
-        return(
-          <div>
-        <h1>It works  {get_json()}{name}</h1>
-        <p id ="l"></p>
-        <div id ="loansdiv"></div>
-        <div id="loan_name_div"></div>
-       
-        </div>
-        );
-      }
-    }
-
-    class Layout extends React.Component{
-      render(){
-
-        return(
-          <div id="container">
-          <Loan />
-          </div>
-          );
-      }
-    }
+  <script src="{% static 'js/scripts.js' %}" type="text/babel"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.3/require.js"></script>
  
-    const app = $("#app")[0];
-    ReactDOM.render(<Layout />, app)
-
-    
-    
-    
-</script>
 {% endblock body_scripts %}
