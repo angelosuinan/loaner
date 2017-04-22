@@ -23,7 +23,7 @@ class Installment(Base):
     def __str__(self):
         return str(self.date_paid) + ": " + str(self.price)
 class LoanBase(Base):
-    due_date = models.DateField(blank=True, null=True, auto_now_add=True)
+    due_date = models.DateField(blank=True, null=True, default="2017-4-22")
     loanee = models.CharField(max_length=300, default="admin")
     payment =models.CharField(max_length=100, choices=payment_methods,
                                                             default='MONTHLY')
