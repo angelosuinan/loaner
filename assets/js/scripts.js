@@ -44,8 +44,10 @@
       }
     }
     class AppyLoan extends React.Component{
-      render(){
+       
 
+
+       handleSubmit(event) {
         function getCookie(name) {
     var cookieValue = null;
     if (document.cookie && document.cookie !== '') {
@@ -61,13 +63,13 @@
     }
     return cookieValue;
 }
-var send = function(){ 
+        var send = function(){ 
 var csrfToken = getCookie('csrftoken');
         axios({
   method: 'post',
   url: 'http://127.0.0.1:8000/list/',
   data: {
-    firstName: p,
+    firstName: "SDDS",
     lastName: 'Flintstone'
   },
   headers:{
@@ -80,11 +82,21 @@ var csrfToken = getCookie('csrftoken');
     console.log(error);
   });
 }
+send();
+event.preventDefault();
+ location.href = "/#"
+       }
+      render(){
+
+        
+var p = "SA";
+
+
 
 
         return(
           <div>
-           <form className="form-horizontal">
+           <form className="form-horizontal" onSubmit={this.handleSubmit.bind(this)}>
   <fieldset>
     <legend>Legend</legend>
     <div className="form-group">
@@ -145,7 +157,7 @@ var csrfToken = getCookie('csrftoken');
     <div className="form-group">
       <div className="col-lg-10 col-lg-offset-2">
         <button type="reset" className="btn btn-default">Cancel</button>
-        <button type="submit" className="btn btn-primary">Submit</button>
+        <button type="submit" className="btn btn-primary" value="submit" >Submit</button>
       </div>
     </div>
   </fieldset>
