@@ -45,10 +45,112 @@
     }
     class AppyLoan extends React.Component{
       render(){
+
+        function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+var send = function(){ 
+var csrfToken = getCookie('csrftoken');
+        axios({
+  method: 'post',
+  url: 'http://127.0.0.1:8000/list/',
+  data: {
+    firstName: p,
+    lastName: 'Flintstone'
+  },
+  headers:{
+   "X-CSRFToken": csrfToken
+  }
+}) .then(function (response) {
+    console.log(response);
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+}
+
+
         return(
-         
-          <h1> Appy Loan</h1>
-         
+          <div>
+           <form className="form-horizontal">
+  <fieldset>
+    <legend>Legend</legend>
+    <div className="form-group">
+      <label for="inputEmail" className="col-lg-2 control-label">Email</label>
+      <div className="col-lg-10">
+        <input type="text" className="form-control" id="inputEmail" placeholder="Email" />
+      </div>
+    </div>
+    <div className="form-group">
+      <label for="inputPassword" className="col-lg-2 control-label">Password</label>
+      <div className="col-lg-10">
+        <input type="password" className="form-control" id="inputPassword" placeholder="Password" />
+        <div className="checkbox">
+          <label>
+            <input type="checkbox" /> Checkbox
+          </label>
+        </div>
+      </div>
+    </div>
+    <div className="form-group">
+      <label for="textArea" className="col-lg-2 control-label">Textarea</label>
+      <div className="col-lg-10">
+        <textarea className="form-control" rows="3" id="textArea"></textarea>
+        <span className="help-block">A longer block of help text that breaks onto a new line and may extend beyond one line.</span>
+      </div>
+    </div>
+    <div className="form-group">
+      <label className="col-lg-2 control-label">Radios</label>
+      <div className="col-lg-10">
+        <div className="radio">
+          <label>
+            <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked="" />
+            Option one is this
+          </label>
+        </div>
+        <div className="radio">
+          <label>
+            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2" />
+            Option two can be something else
+          </label>
+        </div>
+      </div>
+    </div>
+    <div className="form-group">
+      <label for="select" className="col-lg-2 control-label">Selects</label>
+      <div className="col-lg-10">
+        <select className="form-control" id="select" >
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+          <option>5</option>
+        </select>
+        <br />
+       
+      </div>
+    </div>
+    <div className="form-group">
+      <div className="col-lg-10 col-lg-offset-2">
+        <button type="reset" className="btn btn-default">Cancel</button>
+        <button type="submit" className="btn btn-primary">Submit</button>
+      </div>
+    </div>
+  </fieldset>
+  </form>
+  </div>
           );
       }
     }
@@ -69,12 +171,12 @@
         return(
         
           <div >
-          <center>
+          
           <Link to="loan"><button className="btn btn-primary">View Loans</button></Link> &nbsp;
           <Link to="appyLoan"><button className="btn btn-primary">Apply Loan</button></Link>&nbsp;
           <Link to="installment"><button className="btn btn-primary">Pay an Installment</button></Link>&nbsp;
            {this.props.children}
-           </center> 
+           
           </div>
           );
       }
