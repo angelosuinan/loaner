@@ -6,6 +6,8 @@ from loans.api import views2
 from . import views
 urlpatterns =[
         url(r'^$',views.Index.as_view(),),
-    url(r'^list/', views2.LoanList.as_view()),
-   # url(r'^users/(?P<pk>[0-9]+)/$', views.UserDetail.as_view()),)
+         url(r'^list/post', views2.InstallmentView.as_view()),
+    
+        url(r'^list/', views2.LoanList.as_view()),
+   
    ]

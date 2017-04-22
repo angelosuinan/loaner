@@ -10,6 +10,7 @@ from rest_framework import status
 from loans.models import Mortgage, PersonalLoan, StudentLoan, AutoLoan, HouseLoan
 from django.views.decorators.csrf import csrf_exempt
 
+import json
 from itertools import chain
 from collections import OrderedDict
 class LoanList(APIView):
@@ -27,14 +28,26 @@ class LoanList(APIView):
             content = JSONRenderer().render(serializer.data)
             return Response(serializer.data)
         return HttpResponse("LOGIN FIRST")
+    
     @csrf_exempt
-    def post(self, request, format=None):
+    def post(self,request,format=None):
         serializer = LoanSerializer(data = request.data)
         if serializer.is_valid():
             serializer.save()
             return Response (serializer.data,status=status.HTTP_201_CREATED)
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+
 class InstallmentView(APIView):
 
+    def get(self, request, format=None):
+        return HttpResponse("SAD")
+    
+    
+    @csrf_exempt
     def post(self,request,format=None):
-        pass
+        serializer = LoanSerializer(data = request.data)
+        print len(request.data)
+        if serializer.is_valid():
+            return Response (serializer.data,status=status.HTTP_201_CREATED)
+        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+
