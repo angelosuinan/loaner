@@ -15,7 +15,7 @@ class Base(models.Model):
 payment_methods=(
                 ('MONTHLY', 'MONTHLY'),
                         ('SEMI-ANNUALLY', 'SEMI-ANNUALLY'),
-                                ('ANUALLY', 'ANNUALLY'),
+                                ('ANNUALLY', 'ANNUALLY'),
                                         )
 class Installment(Base):
     date_paid = models.DateField(blank=True,null=True)
