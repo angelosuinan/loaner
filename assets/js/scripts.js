@@ -1,14 +1,17 @@
 
-    class Loan extends React.Component{
-      render(){
-        const name = "aaaa";
-         var get_json = function(){ axios.get('/list/?format=json')
+
+function get_json(){ 
+          axios.get('/list/?format=json')
           .then(function (response) {
-          $("#l").text( response['data']);
-          console.log(response['data'])
+          
+
           var x=0;
           
           for (let value of response['data']) {
+            if (x = 0){
+              continue;
+            }
+
             var html ='<div class="panel panel-primary"> \
                 <div class="panel-heading"> \
                   <h1 class="panel-title">'+value['loan_name']+'</h1> \
@@ -31,16 +34,25 @@
             $("#loansdiv").append(div)
             x++;
           }
-          
+          console.log(x);
           })
      .catch(function (error) {
        console.log(error);
        });
         }
+    class Loan extends React.Component{
+      constructor(){
+        super();
         get_json();
+      }
+
+      render(){
+        
+         
+        
         return(
           <div>
-        <h1>It works  </h1>
+        <h1></h1>
         <p id ="l"></p>
         <div id ="loansdiv"></div>
       
@@ -169,10 +181,8 @@ var p = "SA";
           );
       }
     }
-    class Installment extends React.Component{
-      render(){
-        const name = "aaaa";
-         var get_json = function(){ axios.get('/list/?format=json')
+    var totalnumber = 0;
+         var get_json2 = function(){ axios.get('/list/?format=json')
           .then(function (response) {
           $("#l").text( response['data']);
           console.log(response['data'])
@@ -185,15 +195,30 @@ var p = "SA";
                 </div> \
                 <div class="spanel-body"> \
                   <div class="list-group"> \
-                    <a href="#" class="list-group-item active"> \
+                    <a class="list-group-item "> \
                       Nearest Due date: '+value['due_date']+'\
                     </a> \
-                    <a href="#" class="list-group-item"> \
+                    <a  id = "'+x+'pk" class="list-group-item ">'+value['pk']+'</a> \
+                    <a  class="list-group-item active"> \
                     Payment Method: '+value['payment']+' \
                     </a> \
-                    <a href="#" class="list-group-item active"> \
+                    <a class="list-group-item "> \
                     '+value['balance']+' \
                     </a> \
+                      <a class="list-group-item active"> \
+                         <legend>Pay</legend> \
+                         <div class="form-group"> \
+                               <div class="col-lg-10"> \
+                                 <input id="'+x+'" type="number" name = '+value['pk']+'" class="form-control"  placeholder="Amount to Pay"> \
+                               </div> \
+                             </div> \
+                          <div class="form-group"> \
+                                <div class="col-lg-10 col-lg-offset-2"> \
+                                  <button type="reset" class="btn btn-default">Cancel</button> \
+                                  <button type="submit" class="btn btn-primary">Submit</button> \
+                                </div> \
+                              </div> \
+                      </a> \
                   </div> \
                 </div> \
               </div>';
@@ -201,24 +226,56 @@ var p = "SA";
             $("#loansdiv").append(div)
             x++;
           }
-          
+          $("#total-number").text(x);
+          totalnumber=x;
           })
      .catch(function (error) {
        console.log(error);
        });
         }
-        get_json();
+    class Installment extends React.Component{
+      constructor(){
+        super();
+        get_json2();
+      }
+      handleSubmit(event) {
+        
+        var total = $( "total-number" ).text();
+        
+        for(var x =0; x<totalnumber; x++){
+          var y = $("#"+x+"").val();
+          if (y ==""){
+            continue;
+          }
+          console.log(y);
+          var pk = $("#"+x+"pk").text();
+          console.log(pk);
+        }
+        event.preventDefault();
+        
+       }
+      render(){
+        function a(){
+  console.log("OK");
+}
+        
         return(
          <div>
-          <h1> Installments</h1>
+         <p> <h3 id = "total-number"></h3><h3>Active Loans</h3></p>
+           <form class="form-horizontal" onSubmit={this.handleSubmit.bind(this)}> 
+                         <fieldset> 
             <div id ="loansdiv"></div>
-            </div>
+            
+             </fieldset> 
+                         </form> 
+                         </div>
           );
       }
     }
 
     class Layout extends React.Component{
       
+
       render(){
 
         return(
