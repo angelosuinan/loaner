@@ -7,37 +7,43 @@
           $("#l").text( response['data']);
           console.log(response['data'])
           var x=0;
+          
           for (let value of response['data']) {
-            var div = $("<div id='loans-"+x+"'><p>TEst</p></div>");
+            var html ='<div class="panel panel-primary"> \
+                <div class="panel-heading"> \
+                  <h1 class="panel-title">'+value['loan_name']+'</h1> \
+                </div> \
+                <div class="spanel-body"> \
+                  <div class="list-group"> \
+                    <a href="#" class="list-group-item active"> \
+                      Nearest Due date: '+value['due_date']+'\
+                    </a> \
+                    <a href="#" class="list-group-item"> \
+                    Payment Method: '+value['payment']+' \
+                    </a> \
+                    <a href="#" class="list-group-item active"> \
+                    '+value['balance']+' \
+                    </a> \
+                  </div> \
+                </div> \
+              </div>';
+            var div = $(html);
             $("#loansdiv").append(div)
             x++;
           }
-          var x=0
-          for (let value of response['data']) {
-              var p = $("<p id ='loan_name'>"+value['loan_name']+"</p>");
-              $("#loans-"+x).append(p);
-              var p = $("<p id ='due_date'>"+value['due_date']+"</p>");
-              $("#loans-"+x).append(p);
-              var p = $("<p id ='payment'>"+value['payment']+"</p>");
-              $("#loans-"+x).append(p);
-              var p = $("<p id ='balance'>"+value['balance']+"</p>");
-             $("#loans-"+x).append(p);
-              var p = $("<p id ='installment'>"+value['installment']+"</p>");
-              $("#loans-"+x).append(p);
-              x++
-              }
+          
           })
      .catch(function (error) {
        console.log(error);
        });
         }
-
+        get_json();
         return(
           <div>
-        <h1>It works  {get_json()}{name}</h1>
+        <h1>It works  </h1>
         <p id ="l"></p>
         <div id ="loansdiv"></div>
-        <div id="loan_name_div"></div>
+      
        
         </div>
         );
@@ -63,14 +69,25 @@
     }
     return cookieValue;
 }
+ console.log(
+    this.refs.bal.value,
+    this.refs.loan_name.value,
+    this.refs.payment.value
+  );
+ var Bal=this.refs.bal.value;
+ var Pay=this.refs.payment.value;
+ var Name=this.refs.loan_name.value;
+
+
         var send = function(){ 
 var csrfToken = getCookie('csrftoken');
         axios({
   method: 'post',
   url: 'http://127.0.0.1:8000/list/',
-  data: {
-    firstName: "SDDS",
-    lastName: 'Flintstone'
+ data: {
+    balance: Bal,
+    payment: Pay,
+    loan_name: Name
   },
   headers:{
    "X-CSRFToken": csrfToken
@@ -84,7 +101,9 @@ var csrfToken = getCookie('csrftoken');
 }
 send();
 event.preventDefault();
+
  location.href = "/#"
+
        }
       render(){
 
@@ -94,66 +113,50 @@ var p = "SA";
 
 
 
+
         return(
           <div>
+
            <form className="form-horizontal" onSubmit={this.handleSubmit.bind(this)}>
   <fieldset>
-    <legend>Legend</legend>
+    <legend>Apply A Loan</legend>
     <div className="form-group">
-      <label for="inputEmail" className="col-lg-2 control-label">Email</label>
+      <label for="inputnumber" className="col-lg-2 control-label" >Loan Amount</label>
       <div className="col-lg-10">
-        <input type="text" className="form-control" id="inputEmail" placeholder="Email" />
+        <input type="number" className="form-control" id="inputAmount" placeholder="Loan Amount" ref= "bal"/>
       </div>
     </div>
-    <div className="form-group">
-      <label for="inputPassword" className="col-lg-2 control-label">Password</label>
+
+     <div className="form-group">
+      <label for="select" className="col-lg-2 control-label">Loan Type</label>
       <div className="col-lg-10">
-        <input type="password" className="form-control" id="inputPassword" placeholder="Password" />
-        <div className="checkbox">
-          <label>
-            <input type="checkbox" /> Checkbox
-          </label>
-        </div>
-      </div>
-    </div>
-    <div className="form-group">
-      <label for="textArea" className="col-lg-2 control-label">Textarea</label>
-      <div className="col-lg-10">
-        <textarea className="form-control" rows="3" id="textArea"></textarea>
-        <span className="help-block">A longer block of help text that breaks onto a new line and may extend beyond one line.</span>
-      </div>
-    </div>
-    <div className="form-group">
-      <label className="col-lg-2 control-label">Radios</label>
-      <div className="col-lg-10">
-        <div className="radio">
-          <label>
-            <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked="" />
-            Option one is this
-          </label>
-        </div>
-        <div className="radio">
-          <label>
-            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2" />
-            Option two can be something else
-          </label>
-        </div>
-      </div>
-    </div>
-    <div className="form-group">
-      <label for="select" className="col-lg-2 control-label">Selects</label>
-      <div className="col-lg-10">
-        <select className="form-control" id="select" >
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4</option>
-          <option>5</option>
+        <select className="form-control" id="select" ref="loan_name" >
+          <option >MORTAGE</option>
+          <option >PERSONAL</option>
+          <option>AUTO</option>
+          <option>HOME</option>
+          <option>STUDENT</option>
         </select>
-        <br />
-       
       </div>
     </div>
+
+    <div className="form-group">
+      <label for="select" className="col-lg-2 control-label">Payment Method</label>
+      <div className="col-lg-10">
+        <select className="form-control" id="select" ref="payment" >
+          <option>MONTHLY</option>
+          <option>SEMI-ANNUALLY</option>
+          <option>ANNUALLY</option>
+        </select>
+      </div>
+    </div>
+
+
+   
+
+   
+
+
     <div className="form-group">
       <div className="col-lg-10 col-lg-offset-2">
         <button type="reset" className="btn btn-default">Cancel</button>
@@ -168,10 +171,48 @@ var p = "SA";
     }
     class Installment extends React.Component{
       render(){
-        return(
-         
-          <h1> Install ment</h1>
+        const name = "aaaa";
+         var get_json = function(){ axios.get('/list/?format=json')
+          .then(function (response) {
+          $("#l").text( response['data']);
+          console.log(response['data'])
+          var x=0;
           
+          for (let value of response['data']) {
+            var html ='<div class="panel panel-primary"> \
+                <div class="panel-heading"> \
+                  <h1 class="panel-title">'+value['loan_name']+'</h1> \
+                </div> \
+                <div class="spanel-body"> \
+                  <div class="list-group"> \
+                    <a href="#" class="list-group-item active"> \
+                      Nearest Due date: '+value['due_date']+'\
+                    </a> \
+                    <a href="#" class="list-group-item"> \
+                    Payment Method: '+value['payment']+' \
+                    </a> \
+                    <a href="#" class="list-group-item active"> \
+                    '+value['balance']+' \
+                    </a> \
+                  </div> \
+                </div> \
+              </div>';
+            var div = $(html);
+            $("#loansdiv").append(div)
+            x++;
+          }
+          
+          })
+     .catch(function (error) {
+       console.log(error);
+       });
+        }
+        get_json();
+        return(
+         <div>
+          <h1> Installments</h1>
+            <div id ="loansdiv"></div>
+            </div>
           );
       }
     }
