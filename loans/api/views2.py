@@ -49,7 +49,6 @@ class LoanList(APIView):
         if request.data['loan_name'] == "MORTGAGE":
             serializer = MortgageSerializer(data = request.data)
         elif request.data['loan_name'] == "PERSONAL":
-            print("SDDASDASDASC")
             serializer = PersonalSerializer(data = request.data)
         elif request.data['loan_name'] == "AUTO":
             serializer = AutoSerializer(data = request.data)
@@ -94,7 +93,7 @@ class InstallmentView(APIView):
             loan.due_date = loan.due_date
         elif loan.payment == 'ANNUALLY':
             loan.due_date = loan.due_date
-
+        loan.number_of_installments-=1
         loan.balance = int(loan.balance) - int(request.data['price'])
         loan.save()
         serializer = InstallmentSerializer(data = request.data)

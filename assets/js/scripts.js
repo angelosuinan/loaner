@@ -11,7 +11,18 @@ function get_json(){
             if (x = 0){
               continue;
             }
-
+            var min = 0;
+          if (value['number_of_installments'] != 0){
+            if (value['payment'] == 'MONTHLY'){
+              min = value['balance'] / value['number_of_installments'];
+            }
+            else if (value['payment'] == 'SEMI-ANNUALLY'){
+                min = value['balance'] / value['number_of_installments'];
+            }
+            else if (value['payment'] == 'ANNUALLY'){
+                min = value['balance'] / value['number_of_installments'];
+            }
+          }
             var html ='<div class="panel panel-primary"> \
                 <div class="panel-heading"> \
                   <h1 class="panel-title">'+value['loan_name']+'</h1> \
@@ -26,6 +37,12 @@ function get_json(){
                     </a> \
                     <a href="#" class="list-group-item active"> \
                     '+value['balance']+' \
+                    </a> \
+                    <a href="#" class="list-group-item "> \
+                    Remaining Installment: '+value['number_of_installments']+' \
+                    </a> \
+                    <a href="#" class="list-group-item "> \
+                    Next Installment: '+min+' \
                     </a> \
                   </div> \
                 </div> \
@@ -90,6 +107,7 @@ function get_json(){
  var Bal=this.refs.bal.value;
  var Pay=this.refs.payment.value;
  var Name=this.refs.loan_name.value;
+ var Inst=this.refs.ints.value;
 
 
         var send = function(){ 
@@ -100,7 +118,8 @@ var csrfToken = getCookie('csrftoken');
  data: {
     balance: Bal,
     payment: Pay,
-    loan_name: Name
+    loan_name: Name,
+    number_of_installments: Inst
   },
   headers:{
    "X-CSRFToken": csrfToken
@@ -163,11 +182,13 @@ var p = "SA";
         </select>
       </div>
     </div>
-
-
-   
-
-   
+    <div className="form-group">
+      <label for="inputnumber" className="col-lg-2 control-label" >Number of Installment(ex. 12months for MONTHLY, 2years for ANNUALLY 
+        5 installments for SEMI-ANNUALLY in 2 and 1/2 years) </label>
+    <div className="col-lg-10">
+        <input type="number" className="form-control" id="inputInstallments" placeholder="Number of Installment" ref= "ints" />
+      </div>
+    </div>
 
 
     <div className="form-group">
@@ -190,7 +211,21 @@ var p = "SA";
           var x=0;
           
           for (let value of response['data']) {
-            var html ='<div class="panel panel-primary"> \
+
+             var min = 0;
+          if (value['number_of_installments'] != 0){
+            if (value['payment'] == 'MONTHLY'){
+              min = value['balance'] / value['number_of_installments'];
+            }
+            else if (value['payment'] == 'SEMI-ANNUALLY'){
+                min = value['balance'] / value['number_of_installments'];
+            }
+            else if (value['payment'] == 'ANNUALLY'){
+                min = value['balance'] / value['number_of_installments'];
+            }
+          }
+          min = Math.round(min);
+            var html ='<div class="panel panel-primary" style="width:90%; margin-left:10px;"> \
                 <div class="panel-heading"> \
                   <h1 id ="'+x+'loan_name" class="panel-title">'+value['loan_name']+'</h1> \
                 </div> \
@@ -206,11 +241,17 @@ var p = "SA";
                     <a class="list-group-item "> \
                     '+value['balance']+' \
                     </a> \
+                    <a href="#" class="list-group-item "> \
+                    Remaining Installment: '+value['number_of_installments']+' \
+                    </a> \
+                    <a href="#" class="list-group-item active"> \
+                    Next Installment in due_date: '+min+' \
+                    </a> \
                       <a class="list-group-item active"> \
                          <legend>Pay</legend> \
                          <div class="form-group"> \
                                <div class="col-lg-10"> \
-                                 <input id="'+x+'" type="number" name = '+value['pk']+'" class="form-control"  placeholder="Amount to Pay"> \
+                                 <input id="'+x+'" min = "'+min+'" max="'+value['balance']+'" type="number" name = '+value['pk']+'" class="form-control"  placeholder="Amount to Pay"> \
                                </div> \
                              </div> \
                           <div class="form-group"> \
