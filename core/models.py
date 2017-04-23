@@ -23,11 +23,16 @@ class LoanBase(Base):
     loanee = models.CharField(max_length=300, default="admin")
     payment =models.CharField(max_length=100, choices=payment_methods,
                                                             default='MONTHLY')
-    balance = models.DecimalField(max_digits=1000, decimal_places=2, default=Decimal('0'))
+    balance = models.DecimalField(max_digits=1000, decimal_places=2, 
+            default=Decimal('0'))
+    number_of_installments = models.DecimalField(max_digits=100, decimal_places=0,
+            default=Decimal('1'))
+
 
 class Installment(Base):
     date_paid = models.DateField(blank=True,null=True)
-    price = models.DecimalField(max_digits=1000,decimal_places=2,default=Decimal('0'))
+    price = models.DecimalField(max_digits=1000,decimal_places=2,
+            default=Decimal('0'))
     loan = models.ForeignKey(LoanBase , related_name='installments',
             on_delete=models.CASCADE, blank=True, null=True,default=None)
 

@@ -7,16 +7,20 @@ from .models import Mortgage, StudentLoan, HouseLoan, AutoLoan, PersonalLoan
 
 class MortgageAdmin(admin.ModelAdmin):
     list_display = (
+            'id',
             'loanee',
             'due_date',
             'balance',
             'payment',
+            'number_of_installments',
             )
     list_filter = (
+            'id',
             'loanee',
             'due_date',
             'balance',
-            'payment'
+            'payment',
+            'number_of_installments'
             )
     search_fields = (
             )
