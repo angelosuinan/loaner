@@ -41,7 +41,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'loans',
     'core',
+    'accounts',
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -134,8 +136,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # REST_Framework config
 EST_FRAMEWORK = {
             'DEFAULT_PERMISSION_CLASSES': (
-                        'rest_framework.permissions.DjangoModelPermissions',
-                            )
+                        'rest_framework.permissions.AllowAny',
+                            ),
+          
             }
 # Heroku configs
 """

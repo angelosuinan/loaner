@@ -1,13 +1,12 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<p>
+
 {% if user.is_authenticated %}
-Welcome {{ user.username }} <!-- insert loguout-->
-                        {% endif %}
-</p>
+
+
                         <div id="app"></div>
-                       
+                         {% endif %}
 
                         {% endblock content %}
 

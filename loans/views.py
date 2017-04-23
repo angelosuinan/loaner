@@ -9,4 +9,4 @@ class Index(View):
         if request.user.is_authenticated():
             user = request.user
             return render(request, self.template_name,{'user':user})
-        return HttpResponse("No User")
+        return render(request, self.template_name,)
