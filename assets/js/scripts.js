@@ -61,12 +61,7 @@ function get_json(){
         );
       }
     }
-    class AppyLoan extends React.Component{
-       
-
-
-       handleSubmit(event) {
-        function getCookie(name) {
+     function getCookie(name) {
     var cookieValue = null;
     if (document.cookie && document.cookie !== '') {
         var cookies = document.cookie.split(';');
@@ -81,6 +76,12 @@ function get_json(){
     }
     return cookieValue;
 }
+    class AppyLoan extends React.Component{
+       
+
+
+       handleSubmit(event) {
+       
  console.log(
     this.refs.bal.value,
     this.refs.loan_name.value,
@@ -143,7 +144,7 @@ var p = "SA";
       <label for="select" className="col-lg-2 control-label">Loan Type</label>
       <div className="col-lg-10">
         <select className="form-control" id="select" ref="loan_name" >
-          <option >MORTAGE</option>
+          <option >MORTGAGE</option>
           <option >PERSONAL</option>
           <option>AUTO</option>
           <option>HOME</option>
@@ -191,7 +192,7 @@ var p = "SA";
           for (let value of response['data']) {
             var html ='<div class="panel panel-primary"> \
                 <div class="panel-heading"> \
-                  <h1 class="panel-title">'+value['loan_name']+'</h1> \
+                  <h1 id ="'+x+'loan_name" class="panel-title">'+value['loan_name']+'</h1> \
                 </div> \
                 <div class="spanel-body"> \
                   <div class="list-group"> \
@@ -248,16 +249,39 @@ var p = "SA";
             continue;
           }
           console.log(y);
-          var pk = $("#"+x+"pk").text();
-          console.log(pk);
+            var pk = $("#"+x+"pk").text();
+            console.log(pk);
+            var p = String(y);
+            var n = $("#"+x+"loan_name").text();
+            var send = function(){ 
+            var csrfToken = getCookie('csrftoken');
+                  axios({
+            method: 'post',
+            url: 'http://127.0.0.1:8000/list/post',
+           data: {
+              price: p,
+              loan: pk,
+              loan_name: n,
+            },
+            headers:{
+             "X-CSRFToken": csrfToken
+            }
+          }) .then(function (response) {
+              console.log(response);
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
+          }
         }
+        send();
+         
         event.preventDefault();
+        location.href = "/#";
         
        }
       render(){
-        function a(){
-  console.log("OK");
-}
+       
         
         return(
          <div>

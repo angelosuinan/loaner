@@ -26,6 +26,7 @@ class LoanList(APIView):
             A = AutoLoan.objects.filter(loanee=username)
             H = HouseLoan.objects.filter(loanee=username)
             result= list(chain(M, P, S, A, H))
+            print result
             serializer = MortgageSerializer(result , many = True)
             content = JSONRenderer().render(serializer.data)
             return Response(serializer.data)
@@ -43,19 +44,18 @@ class LoanList(APIView):
         elif request.data['payment'] == 'ANNUALLY':
             d = date.today() + timedelta(days=360)
         request.data['due_date'] = d
-
         serializer = MortgageSerializer(data = request.data)
         print request.data['loan_name']
         if request.data['loan_name'] == "MORTGAGE":
             serializer = MortgageSerializer(data = request.data)
-        if request.data['loan_name'] == "PERSONAL":
+        elif request.data['loan_name'] == "PERSONAL":
             print("SDDASDASDASC")
             serializer = PersonalSerializer(data = request.data)
-        if request.data['loan_name'] == "AUTO":
+        elif request.data['loan_name'] == "AUTO":
             serializer = AutoSerializer(data = request.data)
-        if request.data['loan_name'] == "HOUSE":
+        elif request.data['loan_name'] == "HOUSE":
             serializer = HouseSerializer(data = request.data)
-        if request.data['loan_name'] == "STUDENT":
+        elif request.data['loan_name'] == "STUDENT":
             serializer = StudentSerializer(data = request.data)
         if serializer.is_valid():
             serializer.save()
@@ -71,12 +71,34 @@ class InstallmentView(APIView):
         if request.user:
             return Response(serializer.data)
         return HttpResponse("SAD")
-    
-    
+
     @csrf_exempt
     def post(self,request,format=None):
-        serializer = LoanSerializer(data = request.data)
+        request.data["date_paid"] = date.today()
+        loan = None
+        print request.data['loan_name']
+        if request.data['loan_name'] == "MORTGAGE":
+            loan = Mortgage.objects.filter(pk = request.data['loan'])[0]
+        elif request.data['loan_name'] == "PERSONAL":
+            loan = PersonalLoan.objects.filter(pk = request.data['loan'])[0]
+        elif request.data['loan_name'] == "AUTO":
+            loan = AutoLoan.objects.filter(pk = request.data['loan'])[0]
+        elif request.data['loan_name'] == "HOUSE":
+            loan = HouseLoan.objects.filter(pk = request.data['loan'])[0]
+        elif request.data['loan_name'] == "STUDENT":
+            loan = StudentLoan.objects.filter(pk = request.data['loan'])[0]
+
+        if loan.payment == 'MONTHLY':
+            loan.due_date = loan.due_date + timedelta(days=30)
+        elif loan.payment == 'SEMI-ANNUALLY':
+            loan.due_date = loan.due_date
+        elif loan.payment == 'ANNUALLY':
+            loan.due_date = loan.due_date
+
+        loan.balance = int(loan.balance) - int(request.data['price'])
+        loan.save()
+        serializer = InstallmentSerializer(data = request.data)
         if serializer.is_valid():
+            serializer.save()
             return Response (serializer.data,status=status.HTTP_201_CREATED)
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
-
