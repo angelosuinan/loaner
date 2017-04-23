@@ -4,13 +4,13 @@ from django.contrib.auth.models import User
 from django.http import Http404, HttpResponse
 from django.utils.six import BytesIO
 from .serializers import (MortgageSerializer, HouseSerializer, AutoSerializer,
-        PersonalSerializer, StudentSerializer)
+        PersonalSerializer, StudentSerializer, InstallmentSerializer)
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from loans.models import Mortgage, PersonalLoan, StudentLoan, AutoLoan, HouseLoan
 from django.views.decorators.csrf import csrf_exempt
-
+from core.models import Installment
 import json
 from itertools import chain
 from collections import OrderedDict
@@ -66,14 +66,16 @@ class LoanList(APIView):
 class InstallmentView(APIView):
 
     def get(self, request, format=None):
+        data = Installment.objects.all()
+        serializer = InstallmentSerializer(data, many = True)
+        if request.user:
+            return Response(serializer.data)
         return HttpResponse("SAD")
     
     
     @csrf_exempt
     def post(self,request,format=None):
-        print ("DSADA")
         serializer = LoanSerializer(data = request.data)
-        print len(request.data)
         if serializer.is_valid():
             return Response (serializer.data,status=status.HTTP_201_CREATED)
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
