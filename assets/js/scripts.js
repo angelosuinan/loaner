@@ -347,9 +347,23 @@ var p = "SA";
         
           <div >
           
-          <Link to="loan"><button className="btn btn-primary">View Loans</button></Link> &nbsp;
-          <Link to="appyLoan"><button className="btn btn-primary">Apply Loan</button></Link>&nbsp;
-          <Link to="installment"><button className="btn btn-primary">Pay an Installment</button></Link>&nbsp;
+          
+               <ul className="nav nav-tabs">
+            <li className=""><Link to="loan"  aria-expanded="false">View Loan</Link></li>
+            <li className=""><Link to="appyLoan"  aria-expanded="true">Apply Loan</Link></li>
+            <li className=""><Link to="installment"  aria-expanded="true">Pay an Installment</Link></li>
+            <li className="dropdown">
+              <a className="dropdown-toggle" data-toggle="dropdown" href="#">
+                Dropdown <span className="caret"></span>
+              </a>
+              <ul className="dropdown-menu">
+                <li><a href="#dropdown1" data-toggle="tab">Action</a></li>
+                <li className="divider"></li>
+                <li><a href="#dropdown2" data-toggle="tab">Another action</a></li>
+              </ul>
+            </li>
+          </ul>
+          
            {this.props.children}
            
           </div>
