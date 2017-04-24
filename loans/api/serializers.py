@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 from loans.models import Mortgage, PersonalLoan, HouseLoan, AutoLoan, StudentLoan
-from core.models import Installment
+from loans.models import Installment
 
 
 class MortgageSerializer(serializers.ModelSerializer):

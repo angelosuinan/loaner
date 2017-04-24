@@ -54,3 +54,17 @@ class HouseLoan(LoanBase):
 
     def __str__(self):
         return str(self.loanee) + str(self.loan_name)
+
+
+class Installment(Base):
+    date_paid = models.DateField(blank=True, null=True)
+    price = models.DecimalField(max_digits=1000, decimal_places=2,
+            default=Decimal('0'))
+    loan = models.ForeignKey(LoanBase,
+            on_delete=models.CASCADE, blank=True, null=True, default=None)
+
+    def __str__(self):
+        return str(self.date_paid) + ": " + str(self.price)
+
+    def __unicode(self):
+        return str(self.date_paid) + ": " + str(self.price)

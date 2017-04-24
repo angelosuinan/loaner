@@ -10,7 +10,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from loans.models import Mortgage, PersonalLoan, StudentLoan, AutoLoan, HouseLoan
 from django.views.decorators.csrf import csrf_exempt
-from core.models import Installment
+from loans.models import Installment
 import json
 from itertools import chain
 from collections import OrderedDict
@@ -28,7 +28,17 @@ class LoanList(APIView):
             A = AutoLoan.objects.filter(loanee=username)
             H = HouseLoan.objects.filter(loanee=username)
             result = list(chain(M, P, S, A, H))
-            print result
+            '''
+            P =  [d['pk'] for d in list(P.values('pk')) ]
+            M =  [d['pk'] for d in list(M.values('pk')) ]
+            S =  [d['pk'] for d in list(S.values('pk')) ]
+            A =  [d['pk'] for d in list(A.values('pk')) ]
+            H =  [d['pk'] for d in list(H.values('pk')) ]
+            pk_list = list(set(P+M+S+A+H))
+            print type(result[0])
+            installments = Installment.objects.filter(loan__in=pk_list)
+            print installments[0].__str__()
+            '''
             serializer = MortgageSerializer(result, many=True)
             content = JSONRenderer().render(serializer.data)
             return Response(serializer.data)

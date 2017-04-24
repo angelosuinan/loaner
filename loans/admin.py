@@ -3,6 +3,7 @@ from django.contrib import admin
 # Register your models here.
 
 from .models import Mortgage, StudentLoan, HouseLoan, AutoLoan, PersonalLoan
+from .models import Installment
 
 
 class MortgageAdmin(admin.ModelAdmin):
@@ -49,3 +50,4 @@ admin.site.register(StudentLoan, StudentLoanAdmin)
 admin.site.register(HouseLoan, HouseLoanAdmin)
 admin.site.register(AutoLoan, AutoLoanAdmin)
 admin.site.register(PersonalLoan, PersonalLoanAdmin)
+admin.site.register(Installment)
