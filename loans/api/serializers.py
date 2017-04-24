@@ -42,4 +42,4 @@ class StudentSerializer(serializers.ModelSerializer):
 class InstallmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Installment
-        fields = ['pk', 'date_paid', 'loan', 'price', 'number_of_installments']
+        fields = ['pk', 'date_paid', 'loan', 'price']
