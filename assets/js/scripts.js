@@ -1,4 +1,26 @@
-
+function get_installments(pk){
+  var arr = []; 
+  var get_json2 = function(){ 
+    axios.get('/list/post')
+          .then(function (response) {
+          
+          var x=0;
+          for (let value of response['data']) {
+            if(pk==value['loan']){
+              arr.push("45");
+              
+            }
+            x++;
+          }
+         
+          })
+           return arr
+        }
+  
+var s = get_json2();
+console.log(s['0']);
+return arr;
+}
 
 function get_json(){ 
           axios.get('/list/?format=json')
@@ -23,6 +45,9 @@ function get_json(){
                 min = value['balance'] / value['number_of_installments'];
             }
           }
+          var list = get_installments(value['pk']);
+          
+          console.log(typeof(list));
             var html ='<div id="jumbo" class="panel panel-primary"> \
                 <div class="panel-heading"> \
                   <h1 class="panel-title">'+value['loan_name']+'</h1> \
@@ -44,6 +69,10 @@ function get_json(){
                     <a href="#" class="list-group-item "> \
                     Next Installment: '+min+' \
                     </a> \
+                    </a> \
+                    <a href="#" class="list-group-item "> \
+                    Installments: '+list[0]+' \
+                    </a> \
                   </div> \
                 </div> \
               </div>';
@@ -61,12 +90,13 @@ function get_json(){
       constructor(){
         super();
         get_json();
+
       }
 
       render(){
         
          
-        
+        console.log(this.props);
         return(
           <div>
         <h1></h1>
@@ -138,7 +168,7 @@ event.preventDefault();
 
        }
       render(){
-
+console.log(this.props);
         
 var p = "SA";
 
