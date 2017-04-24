@@ -1,0 +1,10 @@
+
+#jumbo {
+    
+    box-shadow: 10px 10px 5px #888888;
+     border-width:1x; border-style: groove;border-radius: 5px;
+}
+#tabs {
+	width: 1120%;
+	height: 120%;
+}

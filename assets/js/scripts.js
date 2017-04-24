@@ -23,7 +23,7 @@ function get_json(){
                 min = value['balance'] / value['number_of_installments'];
             }
           }
-            var html ='<div class="panel panel-primary"> \
+            var html ='<div id="jumbo" class="panel panel-primary"> \
                 <div class="panel-heading"> \
                   <h1 class="panel-title">'+value['loan_name']+'</h1> \
                 </div> \
@@ -211,7 +211,9 @@ var p = "SA";
           var x=0;
           
           for (let value of response['data']) {
-
+            if (value['balance'] ==0){
+              continue;
+            }
              var min = 0;
           if (value['number_of_installments'] != 0){
             if (value['payment'] == 'MONTHLY'){
@@ -225,7 +227,7 @@ var p = "SA";
             }
           }
           min = Math.round(min);
-            var html ='<div class="panel panel-primary" style="width:90%; margin-left:10px;"> \
+            var html ='<div class="panel panel-primary" id="jumbo"> \
                 <div class="panel-heading"> \
                   <h1 id ="'+x+'loan_name" class="panel-title">'+value['loan_name']+'</h1> \
                 </div> \
@@ -254,8 +256,8 @@ var p = "SA";
                                  <input id="'+x+'" min = "'+min+'" max="'+value['balance']+'" type="number" name = '+value['pk']+'" class="form-control"  placeholder="Amount to Pay"> \
                                </div> \
                              </div> \
-                          <div class="form-group"> \
-                                <div class="col-lg-10 col-lg-offset-2"> \
+                          <div class="form-group" > \
+                                <div class="col-lg-10 col-lg-offset-2" > \
                                   <button type="reset" class="btn btn-default">Cancel</button> \
                                   <button type="submit" class="btn btn-primary">Submit</button> \
                                 </div> \
@@ -348,7 +350,8 @@ var p = "SA";
           <div >
           
           
-               <ul className="nav nav-tabs">
+               <ul className="nav nav-tabs" id ="tabs">
+               
             <li className=""><Link to="loan"  aria-expanded="false">View Loan</Link></li>
             <li className=""><Link to="appyLoan"  aria-expanded="true">Apply Loan</Link></li>
             <li className=""><Link to="installment"  aria-expanded="true">Pay an Installment</Link></li>
