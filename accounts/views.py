@@ -9,6 +9,8 @@ from django.db import IntegrityError
 class SignIn(View):
 
     def get(self, request):
+        if request.user.is_authenticated():
+            return render(request, 'loans/index.html')
         return render(request, 'accounts/sign-in.html',)
 
     def post(self, request):
@@ -26,6 +28,8 @@ class SignIn(View):
 class SignUp(View):
 
     def get(self, request):
+        if request.user.is_authenticated():
+            return render(request, 'loans/index.html')
         return render(request, 'accounts/sign-up.html')
 
     def post(self, request):
