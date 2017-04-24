@@ -138,9 +138,9 @@ EST_FRAMEWORK = {
             'DEFAULT_PERMISSION_CLASSES': (
                         'rest_framework.permissions.AllowAny',
                             ),
-          
             }
 # Heroku configs
+
 """
 import dj_database_url
 DATABASES['default'] = dj_database_url.config()

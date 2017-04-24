@@ -42,6 +42,8 @@ class AutoLoanAdmin(MortgageAdmin):
 
 class PersonalLoanAdmin(MortgageAdmin):
     pass
+
+
 admin.site.register(Mortgage, MortgageAdmin)
 admin.site.register(StudentLoan, StudentLoanAdmin)
 admin.site.register(HouseLoan, HouseLoanAdmin)
