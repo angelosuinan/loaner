@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'loans',
     'core',
     'accounts',
+    'webpack_loader',
 ]
 
 
@@ -134,10 +135,16 @@ STATICFILES_DIRS = [
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # REST_Framework config
-EST_FRAMEWORK = {
+REST_FRAMEWORK = {
             'DEFAULT_PERMISSION_CLASSES': (
                         'rest_framework.permissions.AllowAny',
                             ),
+            }
+WEBPACK_LOADER = {
+    'DEFAULT': {
+        'BUNDLE_DIR_NAME': 'bundles/',
+        'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats.json'),
+         }
             }
 # Heroku configs
 

@@ -1,14 +1,9 @@
-var React = require('react')
-var ReactDOM = require('react-dom')
+import React from "react";
 
-var Hello = React.createClass ({
-    render: function() {
-        return (
-            <h1>
-            Hello, React!
-            </h1>
-        )
-    }
-})
+import ReactDOM from "react-dom";
 
-ReactDOM.render(<Hello />, document.getElementById('app'))
+import Layout from "./components/Layout";
+
+
+const app = document.getElementById('app')
+ReactDOM.render(<Layout />, app)
