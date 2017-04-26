@@ -14,7 +14,7 @@ export default class Loan extends React.Component{
      var arr =  Object.keys(res).map(key => res[key])
    
      var arr =  Object.keys(arr[0]).map(key => arr[0][key])
-     console.log(arr[0]);
+     
      this.setState({loans: arr});
       }).catch(function (error) {
        console.log(error);
@@ -38,18 +38,3 @@ export default class Loan extends React.Component{
       }
     }
 
-var get_next_installment = function(value){
-  var min =0;
-  if (value['number_of_installments'] != 0){
-            if (value['payment'] == 'MONTHLY'){
-              min = value['balance'] / value['number_of_installments'];
-            }
-            else if (value['payment'] == 'SEMI-ANNUALLY'){
-                min = value['balance'] / value['number_of_installments'];
-            }
-            else if (value['payment'] == 'ANNUALLY'){
-                min = value['balance'] / value['number_of_installments'];
-            }
-          }
-          return min;
-}

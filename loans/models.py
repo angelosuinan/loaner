@@ -27,11 +27,17 @@ class Mortgage(LoanBase):
     def __str__(self):
         return str(self.loanee) + str(self.loan_name)
 
+    def __unicode__(self):
+        return str(self.loanee) + str(self.loan_name)
+
 
 class StudentLoan(LoanBase):
     loan_name = models.CharField(max_length=100, default="Student")
 
     def __str__(self):
+        return str(self.loanee) + str(self.loan_name)
+
+    def __unicode__(self):
         return str(self.loanee) + str(self.loan_name)
 
 
@@ -41,6 +47,9 @@ class AutoLoan(LoanBase):
     def __str__(self):
         return str(self.loanee) + str(self.loan_name)
 
+    def __unicode__(self):
+        return str(self.loanee) + str(self.loan_name)
+
 
 class PersonalLoan(LoanBase):
     loan_name = models.CharField(max_length=100, default="Personal")
@@ -48,11 +57,17 @@ class PersonalLoan(LoanBase):
     def __str__(self):
         return str(self.loanee) + str(self.loan_name)
 
+    def __unicode__(self):
+        return str(self.loanee) + str(self.loan_name)
+
 
 class HouseLoan(LoanBase):
     loan_name = models.CharField(max_length=100, default="House")
 
     def __str__(self):
+        return str(self.loanee) + str(self.loan_name)
+
+    def __unicode__(self):
         return str(self.loanee) + str(self.loan_name)
 
 
@@ -66,5 +81,5 @@ class Installment(Base):
     def __str__(self):
         return str(self.date_paid) + ": " + str(self.price)
 
-    def __unicode(self):
+    def __unicode__(self):
         return str(self.date_paid) + ": " + str(self.price)

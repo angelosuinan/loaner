@@ -54,29 +54,70 @@ function getCookie(name) {
     }
     handleSubmit(event){
       var loan = this.state.loans;
-      console.log(loan);
+      var present = this.state.present;
+
+      var pk = loan[present].pk;
+      var n = loan[present].loan_name;
+      var p = this.refs.inputInst.value;
+      var send = function(){ 
+            var csrfToken = getCookie('csrftoken');
+                  axios({
+            method: 'post',
+            url: 'http://127.0.0.1:8000/list/post',
+           data: {
+              price: p,
+              loan: pk,
+              loan_name: n,
+            },
+            headers:{
+             "X-CSRFToken": csrfToken
+            }
+          }) .then(function (response) {
+              console.log(response);
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
+          }
+      send();
       event.preventDefault();
       location.href="/#";
     }
     render(){
       var loanitem;
-      console.log(this.state.loans.length)
+  
       if (this.state.loans.length != 0 ){
+        if (this.state.loans[this.state.present].balance <= 0){
+          if(this.state.present !=0){
+            var x = this.state.present-1;
+          this.setState({present: x});
+          }
+          else if (this.state.present !=this.state.loans.length-1){
+            var x = this.state.present+1;
+          this.setState({present:  x});
+          } 
+        }
         var loan = this.state.loans[this.state.present];
         loanitem = <LoanItem loan={loan} />
+        
       }
         return(
           <div>
+           <button class="left" onClick={this.handleLeft.bind(this)}>left</button>
+          <button class="right" onClick={this.handleRight.bind(this)}>right</button>
+        
           <div class="loans-div">
+
           {loanitem}          
           </div>
+
           <form onSubmit={this.handleSubmit.bind(this)}>
             <fieldset>
             <legend>Pay An Installment</legend>
             <div class="form-group">
                   <label  class="col-lg-2 control-label">Pay </label>
                   <div class="col-lg-10">
-                    <input type="number" class="form-control" id="inputEmail" placeholder="Pay Amount" />
+                    <input type="number" ref="inputInst"class="form-control" id="inputEmail" placeholder="Pay Amount" />
                   </div>
                 </div>
                 <div class="form-group">
@@ -87,9 +128,7 @@ function getCookie(name) {
                     </div>
               </fieldset>
           </form>
-          <button class="left" onClick={this.handleLeft.bind(this)}>left</button>
-          <button class="right" onClick={this.handleRight.bind(this)}>right</button>
-        
+         
       
        
         </div>

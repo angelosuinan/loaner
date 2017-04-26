@@ -29,3 +29,7 @@ class LoanBase(Base):
             default=Decimal('0'))
     number_of_installments = models.DecimalField(max_digits=100, decimal_places=0,
             default=Decimal('1'))
+    approve = models.BooleanField(default=False)
+
+    def __unicode__(self):
+        return str(self.loanee) + " Id = " + str(self.id)

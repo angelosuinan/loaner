@@ -8,8 +8,8 @@ from .models import Installment
 
 class MortgageAdmin(admin.ModelAdmin):
     list_display = (
-            'id',
             'loanee',
+            'id',
             'due_date',
             'balance',
             'payment',
