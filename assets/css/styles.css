@@ -4,3 +4,22 @@
     box-shadow: 10px 10px 5px #888888;
     margin-left:30px; margin-right:30px; border-width:1x; border-style: groove;border-radius: 5px;
 }
+.form-group{
+	
+	padding-left: 50px;
+	padding-right: 50px;
+
+}
+
+.button{
+	padding-left: 100px
+}
+
+.left{
+background:url('../images/arrowleft.png');
+}
+
+.right{
+
+
+}
