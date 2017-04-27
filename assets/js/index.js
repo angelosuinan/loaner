@@ -6,7 +6,10 @@ import Layout from "./components/Layout";
 import Loan from "./components/Loan";
 import AppyLoan from "./components/AppyLoan";
 import Installment from "./components/Installment";
-import Welcome from "./components/Welcome"
+import Welcome from "./components/Welcome";
+import Notification from "./components/Notification";
+import LoanItem from "./components/LoanItem";
+import {LoanType } from "./components/AppyLoan";
 
 const app = document.getElementById('app')
 ReactDOM.render(
@@ -16,6 +19,9 @@ ReactDOM.render(
 	           <Route path="loan" component={Loan}></Route>
 	           <Route path="appyLoan" component={AppyLoan}></Route>
 	           <Route path="installment" component={Installment}></Route>
+	           <Route path="notification" component={Notification}></Route>
+	           <Route path="individualloan" component={LoanItem}></Route>
+	           <Route path="LoanType" component={LoanType}></Route>
            </Route>
           
             

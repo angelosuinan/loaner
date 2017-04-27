@@ -6,5 +6,5 @@ from . import views
 urlpatterns = [
         url(r'^$', views.Index.as_view(), name="index"),
         url(r'^list/post', views2.InstallmentView.as_view()),
-        url(r'^list/', views2.LoanList.as_view()),
+        url(r'^list/(?P<filter>.+|)$', views2.LoanList.as_view()),
    ]

@@ -41,6 +41,6 @@ class SignUp(View):
                 user = User.objects.create_user(usern, email, pwd)
                 user.save()
                 if(authenticate(username=usern, password=pwd)):
-                    return render(request, 'loans/index.html', {'user': user},)
+                    return render(request, 'accounts/sign-in.html',)
             except(IntegrityError):
                 return render(request, 'accounts/sign-up.html',)

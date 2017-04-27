@@ -4,11 +4,22 @@ export default class Loan extends React.Component{
     constructor(){
         super();      
       this.state ={
-        loans:[]
+        loans:[],
+        installments:[]
       }
 
     }
     componentDidMount(){
+      axios.get(`/list/post?format=json`)
+      .then(res => {
+     var arr =  Object.keys(res).map(key => res[key])
+   
+     var arr =  Object.keys(arr[0]).map(key => arr[0][key])
+     
+     this.setState({installments: arr});
+      }).catch(function (error) {
+       console.log(error);
+       }); 
       axios.get(`/list/?format=json`)
       .then(res => {
      var arr =  Object.keys(res).map(key => res[key])
@@ -19,11 +30,18 @@ export default class Loan extends React.Component{
       }).catch(function (error) {
        console.log(error);
        }); 
+      
     }      
     render(){
-        var loanitem = this.state.loans.map(x =>
-            <LoanItem loan={x} />
-            )
+      let y =0;
+      if (this.state.installments.length){
+        var loanitem = this.state.loans.map(function(x){
+            
+
+            return <LoanItem loan={x} />;
+
+            });
+       }
         
         return(
           <div>

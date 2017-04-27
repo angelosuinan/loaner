@@ -12,7 +12,7 @@ export default class Layout extends React.Component {
           
           
                <ul class="nav nav-tabs" id ="tabs">
-               
+            <li class=""><Link to="notification"  aria-expanded="true">Notifications</Link></li>  
             <li class=""><Link to="loan"  aria-expanded="false">View Loan</Link></li>
             <li class=""><Link to="appyLoan"  aria-expanded="true">Apply Loan</Link></li>
             <li class=""><Link to="installment"  aria-expanded="true">Pay an Installment</Link></li>

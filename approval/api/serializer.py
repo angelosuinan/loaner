@@ -6,4 +6,4 @@ from approval.models import Approval
 class ApprovalSerializer(serializers.ModelSerializer):
     class Meta:
         model = Approval
-        fields = ['pk', 'approve_this_loan', ]
+        fields = ['pk', 'loan','approve_this_loan', ]

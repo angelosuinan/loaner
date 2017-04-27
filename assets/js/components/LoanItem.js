@@ -4,9 +4,11 @@ export default class LoanItem extends React.Component {
 
 
   render() {
+ 
    var loan = this.props.loan;
 
    var min = get_next_installment(loan);
+ 
    return(
    
     <div id="jumbo" class="panel panel-primary"> 
@@ -33,6 +35,9 @@ export default class LoanItem extends React.Component {
                   
                     <a href="#" class="list-group-item "> 
                     Installments: installments
+                    </a> 
+                    <a href="#" class="list-group-item "> 
+                    Approve: {String(loan.approve)}
                     </a> 
                   </div> 
                 </div> 

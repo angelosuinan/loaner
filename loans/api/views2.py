@@ -19,7 +19,7 @@ from datetime import date, timedelta
 
 class LoanList(APIView):
 
-    def get(self, request, format=None):
+    def get(self, request, **kwargs):
         if request.user.is_authenticated():
             username = request.user.username
             M = Mortgage.objects.filter(loanee=username)
@@ -27,6 +27,13 @@ class LoanList(APIView):
             S = StudentLoan.objects.filter(loanee=username)
             A = AutoLoan.objects.filter(loanee=username)
             H = HouseLoan.objects.filter(loanee=username)
+            if kwargs['filter']:
+                M=Mortgage.objects.filter(loanee=username).exclude(balance=0).exclude(approve=False)
+                P = PersonalLoan.objects.filter(loanee=username).exclude(balance=0).exclude(approve=False)
+                S = StudentLoan.objects.filter(loanee=username).exclude(balance=0).exclude(approve=False)
+                A = AutoLoan.objects.filter(loanee=username).exclude(balance=0).exclude(approve=False)
+                H = HouseLoan.objects.filter(loanee=username).exclude(balance=0).exclude(approve=False)
+
             result = list(chain(M, P, S, A, H))
             '''
             P =  [d['pk'] for d in list(P.values('pk')) ]
@@ -45,7 +52,7 @@ class LoanList(APIView):
         return HttpResponse("LOGIN FIRST")
 
     @csrf_exempt
-    def post(self, request, format=None):
+    def post(self, request, format=None, **kwargs):
         request.data['loanee'] = request.user.username
         d = ""
         print request.data['payment']
@@ -102,12 +109,13 @@ class InstallmentView(APIView):
         if loan.payment == 'MONTHLY':
             loan.due_date = loan.due_date + timedelta(days=30)
         elif loan.payment == 'SEMI-ANNUALLY':
-            loan.due_date = loan.due_date
+            loan.due_date = loan.due_date + timedelta(days=185)
         elif loan.payment == 'ANNUALLY':
-            loan.due_date = loan.due_date
+            loan.due_date = loan.due_date + timedelta(days=360)
         loan.number_of_installments -= 1
         loan.balance = int(loan.balance) - int(request.data['price'])
         loan.save()
+        print loan
         serializer = InstallmentSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()

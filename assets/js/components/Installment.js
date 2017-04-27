@@ -27,7 +27,7 @@ function getCookie(name) {
       }
     }
     componentDidMount(){
-      axios.get(`/list/?format=json`)
+      axios.get(`/list/filter?format=json`)
       .then(res => {
      var arr =  Object.keys(res).map(key => res[key])
    
@@ -55,11 +55,14 @@ function getCookie(name) {
     handleSubmit(event){
       var loan = this.state.loans;
       var present = this.state.present;
-
       var pk = loan[present].pk;
       var n = loan[present].loan_name;
       var p = this.refs.inputInst.value;
-      var send = function(){ 
+       var send = function(){ 
+      
+
+      
+     
             var csrfToken = getCookie('csrftoken');
                   axios({
             method: 'post',
@@ -79,30 +82,32 @@ function getCookie(name) {
               console.log(error);
             });
           }
+         
+      if (true) {
       send();
-      event.preventDefault();
-      location.href="/#";
+       event.preventDefault();
+       location.href="/#";
+    }else{
+       event.preventDefault();
+      
+    }
+      
+     
     }
     render(){
       var loanitem;
-  
+
       if (this.state.loans.length != 0 ){
-        if (this.state.loans[this.state.present].balance <= 0){
-          if(this.state.present !=0){
-            var x = this.state.present-1;
-          this.setState({present: x});
-          }
-          else if (this.state.present !=this.state.loans.length-1){
-            var x = this.state.present+1;
-          this.setState({present:  x});
-          } 
-        }
-        var loan = this.state.loans[this.state.present];
-        loanitem = <LoanItem loan={loan} />
         
+
+        var loan = this.state.loans[this.state.present];
+        var min = get_next_installment(loan);
+        loanitem = <LoanItem loan={loan} />
+        var max = loan.balance
       }
         return(
           <div>
+
            <button class="left" onClick={this.handleLeft.bind(this)}>left</button>
           <button class="right" onClick={this.handleRight.bind(this)}>right</button>
         
@@ -117,7 +122,7 @@ function getCookie(name) {
             <div class="form-group">
                   <label  class="col-lg-2 control-label">Pay </label>
                   <div class="col-lg-10">
-                    <input type="number" ref="inputInst"class="form-control" id="inputEmail" placeholder="Pay Amount" />
+                    <input type="number" min={min} max={max}ref="inputInst" class="form-control" placeholder="Pay Amount" />
                   </div>
                 </div>
                 <div class="form-group">
@@ -135,3 +140,18 @@ function getCookie(name) {
         );
       }
     }
+var get_next_installment = function(value){
+  var min =0;
+  if (value['number_of_installments'] != 0){
+            if (value['payment'] == 'MONTHLY'){
+              min = value['balance'] / value['number_of_installments'];
+            }
+            else if (value['payment'] == 'SEMI-ANNUALLY'){
+                min = value['balance'] / value['number_of_installments'];
+            }
+            else if (value['payment'] == 'ANNUALLY'){
+                min = value['balance'] / value['number_of_installments'];
+            }
+          }
+          return min;
+}

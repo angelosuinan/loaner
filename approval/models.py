@@ -17,6 +17,7 @@ class Approval(Base):
 def execute_after_save(sender, instance, created, *args, **kwargs):
     if created:
         s = sender.loan.__get__(instance)
-        s.approve = True
-        s.save()
+        if (sender.approve_this_loan):
+            s.approve = True
+            s.save()
         print(s.approve)
