@@ -1,53 +1,16 @@
 import { Link } from "react-router";
 import React from "react";
 
- function getCookie(name) {
-    var cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-        var cookies = document.cookie.split(';');
-        for (var i = 0; i < cookies.length; i++) {
-            var cookie = jQuery.trim(cookies[i]);
-            // Does this cookie string begin with the name we want?
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
-    }
-    return cookieValue;
-}
-class LoanType extends React.Component{
-  render(){
+import {bindActionCreators} from "redux";
+import { connect } from "react-redux";
 
-    return(
-      <p>SDADS</p>
-      )
-  }
-}
-class LoanAmount extends React.Component{
-  render(){
 
-    return(
-      <p>SDADS</p>
-      )
+@connect((store) => {
+  return {
+    application: store.application.application,
+    successloan: store.successloan.successloan
   }
-}
-class PaymentMethod extends React.Component{
-  render(){
-
-    return(
-      <p>SDADS</p>
-      )
-  }
-}
-class NumberofInstallment extends React.Component{
-  render(){
-
-    return(
-      <p>SDADS</p>
-      )
-  }
-}
+})
  export default class AppyLoan extends React.Component{
        constructor(){
         super();
@@ -56,51 +19,18 @@ class NumberofInstallment extends React.Component{
         }
        }
     handleSubmit(event) {
-       
-        console.log(
-        this.refs.bal.value,
-        this.refs.loan_name.value,
-        this.refs.payment.value
-          );
-        var Bal=this.state.balance;
-        var Pay=this.refs.payment.value;
-        var Name=this.refs.loan_name.value;
-        var Inst=this.refs.ints.value;
 
-
-        var send = function(){ 
-        var csrfToken = getCookie('csrftoken');
-        axios({
-        method: 'post',
-        url: 'http://127.0.0.1:8000/list/',
-        data: {
-            balance: Bal,
-            payment: Pay,
-            loan_name: Name,
-            number_of_installments: Inst
-          },
-          headers:{
-           "X-CSRFToken": csrfToken
-          }
-        }) .then(function (response) {
-            console.log(response);
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-        }
-        send();
         event.preventDefault();
-
-                location.href = "/#"
+        location.href = "/#"
 
     }
     handleAmount(e){
       var x = e.target.value * 1.2
       this.setState({balance : x })
     }
-                  render(){
-       
+
+    render(){
+        console.log(this.props)
             var p = "SA";
         return(
           <div>
@@ -161,7 +91,7 @@ class NumberofInstallment extends React.Component{
     </div>
   </fieldset>
   </form>
-  <Link to="LoanType">ASD</Link>
+  <Link to="LoanType">Proceed</Link>
   </div>
           );
       }
