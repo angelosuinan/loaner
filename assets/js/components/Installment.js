@@ -1,41 +1,30 @@
 import React from "react";
 import LoanItem from "./LoanItem";
+import { Link } from "react-router";
+
+import { connect } from "react-redux";
+
+import { fetchLoansWithInstallments, 
+  postLoanInstallments } from "../actions/installmentsActions";
 
 
-function getCookie(name) {
-    var cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-        var cookies = document.cookie.split(';');
-        for (var i = 0; i < cookies.length; i++) {
-            var cookie = jQuery.trim(cookies[i]);
-            // Does this cookie string begin with the name we want?
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
-    }
-    return cookieValue;
-}
-
-  export default class Installment extends React.Component{
+@connect((store) => {
+  console.log(store.installments.posted)
+  return {
+    loans: store.installments.installments,
+    posted: store.installments.posted
+  }
+})
+export default class Installment extends React.Component{
     constructor(){
          super();      
       this.state ={
-        loans: [],
         present:0,
       }
     }
-    componentDidMount(){
-      axios.get(`/list/filter?format=json`)
-      .then(res => {
-     var arr =  Object.keys(res).map(key => res[key])
    
-     var arr =  Object.keys(arr[0]).map(key => arr[0][key])
-     this.setState({loans: arr, present: arr.length-1});
-      }).catch(function (error) {
-       console.log(error);
-       }); 
+    componentWillMount(){
+       this.props.dispatch(fetchLoansWithInstallments());
     }
     handleLeft(e){
       if (this.state.present !=0){
@@ -46,65 +35,55 @@ function getCookie(name) {
          
     }
     handleRight(e){
-      if (this.state.present !=this.state.loans.length-1){
+      if (this.state.present !=this.props.loans.length-1){
         var x = this.state.present+1;
       this.setState({present:  x});
       }
     
     }
     handleSubmit(event){
-      var loan = this.state.loans;
-      var present = this.state.present;
-      var pk = loan[present].pk;
-      var n = loan[present].loan_name;
-      var p = this.refs.inputInst.value;
-       var send = function(){ 
-      
-
-      
-     
-            var csrfToken = getCookie('csrftoken');
-                  axios({
-            method: 'post',
-            url: 'http://127.0.0.1:8000/list/post',
-           data: {
-              price: p,
-              loan: pk,
-              loan_name: n,
-            },
-            headers:{
-             "X-CSRFToken": csrfToken
-            }
-          }) .then(function (response) {
-              console.log(response);
-            })
-            .catch(function (error) {
-              console.log(error);
-            });
-          }
+      const { loans } = this.props;
+      const {present} = this.state;
+      this.props.dispatch(postLoanInstallments(loans, present, this.refs.inputInst.value));
          
-      if (true) {
-      send();
-       event.preventDefault();
-       location.href="/#";
-    }else{
-       event.preventDefault();
-      
+    
+        
+       event.preventDefault();       
     }
-      
-     
+    payAnother(props){
+      location.reload();
     }
     render(){
-      var loanitem;
 
-      if (this.state.loans.length != 0 ){
+      var loanitem;
+      const { loans, posted } = this.props;
+      console.log(posted);
+
+     
+     
+       
+       if(posted){
+        var loan = loans;
+        return (
+            <div class="loans-div">
+            <center><p> PAID AN INSTALLMENT IN THIS LOAN </p>
+            <button onClick ={this.payAnother}>Pay Another Installment</button></center>
+           <LoanItem loan={loan} />
+            </div>
+          )
+       }
+       if(!loans.length){
+        return <p> No Existing Loans</p>
+       }
         
 
-        var loan = this.state.loans[this.state.present];
+      
+        
+        var loan = loans[this.state.present];
         var min = get_next_installment(loan);
         loanitem = <LoanItem loan={loan} />
         var max = loan.balance
-      }
+      
         return(
           <div>
 
@@ -122,7 +101,7 @@ function getCookie(name) {
             <div class="form-group">
                   <label  class="col-lg-2 control-label">Pay </label>
                   <div class="col-lg-10">
-                    <input type="number" min={min} max={max}ref="inputInst" class="form-control" placeholder="Pay Amount" />
+                    <input type="number" ref="inputInst" class="form-control" placeholder="Pay Amount" />
                   </div>
                 </div>
                 <div class="form-group">

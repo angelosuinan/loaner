@@ -1,16 +1,16 @@
 import React from "react";
 
+
 export default class LoanItem extends React.Component {
 
 
   render() {
- 
+    
    var loan = this.props.loan;
 
    var min = get_next_installment(loan);
  
    return(
-   
     <div id="jumbo" class="panel panel-primary"> 
                 <div class="panel-heading"> 
                   <h1 class="panel-title">{loan.loan_name}</h1> 
@@ -42,6 +42,7 @@ export default class LoanItem extends React.Component {
                   </div> 
                 </div> 
               </div>
+      
     )
   }
 }
