@@ -1,6 +1,6 @@
 import React from "react";
 import LoanItem from "./LoanItem";
-import { Link } from "react-router";
+
 import {bindActionCreators} from "redux";
 import { connect } from "react-redux";
 
@@ -58,7 +58,7 @@ export default class Installment extends React.Component{
       var loanitem;
       const { loans, posted } = this.props;
       console.log(posted);
-       const { dispatch } = this.props;
+      const { dispatch } = this.props;
       const actions = bindActionCreators(fetchLoansWithInstallments, dispatch);
      
        
