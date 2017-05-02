@@ -17,7 +17,7 @@ export default function reducer(state={
 }, action){
 	switch (action.type){
 		case "FETCHED_LOANS_INSTALLMENT": {
-			return {...state, fetching:true}
+			return {...state, fetching:true, }
 		}
 		case "FETCHED_LOANS_INSTALLMENT_REJECTED" : {
 			 return {...state, fetching: false, error: action.payload}
@@ -28,6 +28,7 @@ export default function reducer(state={
           ...state,
           fetching: false,
           fetched: true,
+          posted: false,
           installments: action.payload,
         	}	
 		}

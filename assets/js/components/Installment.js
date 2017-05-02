@@ -1,7 +1,7 @@
 import React from "react";
 import LoanItem from "./LoanItem";
 import { Link } from "react-router";
-
+import {bindActionCreators} from "redux";
 import { connect } from "react-redux";
 
 import { fetchLoansWithInstallments, 
@@ -58,8 +58,8 @@ export default class Installment extends React.Component{
       var loanitem;
       const { loans, posted } = this.props;
       console.log(posted);
-
-     
+       const { dispatch } = this.props;
+      const actions = bindActionCreators(fetchLoansWithInstallments, dispatch);
      
        
        if(posted){
@@ -67,7 +67,7 @@ export default class Installment extends React.Component{
         return (
             <div class="loans-div">
             <center><p> PAID AN INSTALLMENT IN THIS LOAN </p>
-            <button onClick ={this.payAnother}>Pay Another Installment</button></center>
+            <button onClick ={actions}>Pay Another Installment</button></center>
            <LoanItem loan={loan} />
             </div>
           )
