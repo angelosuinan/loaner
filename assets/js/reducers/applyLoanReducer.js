@@ -18,7 +18,7 @@ export default function reducer(state={
     counter: {
         past: [],
         present: 0,
-        future: [1,2,3,4],
+        future: [1,2,3,4,5],
     },
 	fetching: false,
 	fetched: false,
