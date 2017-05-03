@@ -30,7 +30,16 @@ export function postApplyLoan() {
 	}
 }
 
-
+export function undo() {
+    return{
+        type: "UNDO",
+    }
+}
+export function redo() {
+    return{
+        type: "REDO",
+    }
+}
 function getCookie(name) {
     var cookieValue = null;
     if (document.cookie && document.cookie !== '') {

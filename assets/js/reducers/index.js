@@ -6,6 +6,8 @@ import notifications from "./notificationsReducer";
 import loanNotif from "./notificationsReducer";
 import application from "./applyLoanReducer";
 import successloan from "./applyLoanReducer";
+import counter from "./applyLoanReducer";
+
 export default combineReducers({
     loans,
     installments,
@@ -13,4 +15,5 @@ export default combineReducers({
     loanNotif,
     application,
     successloan,
+    counter,
 });

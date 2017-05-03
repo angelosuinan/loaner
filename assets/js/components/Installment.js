@@ -9,7 +9,6 @@ import { fetchLoansWithInstallments,
 
 
 @connect((store) => {
-  
   return {
     loans: store.installments.installments,
     posted: store.installments.posted
