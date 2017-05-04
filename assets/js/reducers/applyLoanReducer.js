@@ -3,7 +3,7 @@ export default function reducer(state={
 		balance: 0,
 		loan_name: "MORTGAGE",
 		payment: "MONTHLY",
-		number_of_installments: null,
+		number_of_installments: 1,
         limit: 100000,
         loan_amount: null,
 	},
@@ -43,7 +43,7 @@ export default function reducer(state={
         case "UNDO": {
             const previous = state.counter.past[state.counter.past.length-1];
             const newPast = state.counter.past.slice(0, state.counter.past.length - 1);
-            console.log(previous)
+           
             return{
             ...state,
             counter:{ ...state,
@@ -56,7 +56,7 @@ export default function reducer(state={
         case "REDO": {
             const next = state.counter.future[0];
             const newfuture = state.counter.future.slice(1)
-            console.log(next)
+           
             return {
                 ...state,
                 counter:{...state, 
@@ -87,12 +87,12 @@ export default function reducer(state={
                     future: [1,2,3,4,5],
                 },
                 successloan:{
-                    loan_name: null,
-                    due_date: null,
-                    balance: null,
-                    payment: null,
+                    balance: 0,
+                    loan_name: "MORTGAGE",
+                    payment: "MONTHLY",
                     number_of_installments: null,
-                    approve: false,
+                    limit: 100000,
+                    loan_amount: null,
                 },
             }
         }
