@@ -1,27 +1,20 @@
 import axios from "axios";
 
-export function postApplyLoan() {
+export function postApplication(val) {
     return function(dispatch) {
 
-        var Bal=this.state.balance;
-        var Pay=this.refs.payment.value;
-        var Name=this.refs.loan_name.value;
-        var Inst=this.refs.ints.value;
+        
         var csrfToken = getCookie('csrftoken');
         axios({
     	method: 'post',
     	url: 'http://127.0.0.1:8000/list/',
-	   	data: {
-	      balance: Bal,
-          payment: Pay,
-          loan_name: Name,
-          number_of_installments: Inst
-	    },
+	   	data: val,
 	    headers:{
 	     "X-CSRFToken": csrfToken
 	    }
 	  	}) .then(function (response) {
-	      dispatch({type: "POSTED_APPLY_LOAN_FULFILLED", payload:loans[present]})
+            console.log(response);
+	      dispatch({type: "POSTED_APPLY_LOAN_FULFILLED", payload:val})
 	    })
 	    .catch(function (error) {
 	      dispatch({type: "POSTED_APPLY_LOAN_REJECTED", payload: error})
@@ -38,6 +31,19 @@ export function undo() {
 export function redo() {
     return{
         type: "REDO",
+    }
+}
+
+export function saveApplication(value) {
+    return{
+        type: "SAVE_APPLICATION",
+        payload: value,
+    }
+}
+
+export function resetState(){
+    return{
+        type: "RESET_STATE"
     }
 }
 function getCookie(name) {

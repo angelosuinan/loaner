@@ -5,9 +5,9 @@ export default class LoanItem extends React.Component {
 
 
   render() {
-    
+     console.log(this.props)
    var loan = this.props.loan;
-
+ 
    var min = get_next_installment(loan);
  
    return(

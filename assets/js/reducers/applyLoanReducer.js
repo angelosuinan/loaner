@@ -1,19 +1,19 @@
 export default function reducer(state={
 	application: {
-		LoanAmount: null,
-		LoanType: null,
-		PaymentMethod: null,
-		NumberofInstallment: null,
+		balance: 0,
+		loan_name: "MORTGAGE",
+		payment: "MONTHLY",
+		number_of_installments: null,
+        limit: 100000,
+        loan_amount: null,
 	},
 	successloan:{
-		pk: null,
         loan_name: null,
         due_date: null,
-        loanee: null,
         balance: null,
         payment: null,
         number_of_installments: null,
-        approve: null,
+        approve: false,
 	},
     counter: {
         past: [],
@@ -64,6 +64,36 @@ export default function reducer(state={
                 present: next,
                 future: newfuture,
                 }
+            }
+        }
+        case "SAVE_APPLICATION": {
+            return{
+                ...state,
+                application: action.payload,
+            }
+        }
+        case "RESET_STATE": {
+            return {
+                ...state,
+                application: {
+                    balance: null,
+                    loan_name: null,
+                    payment: null,
+                    number_of_installments: null,
+                },
+                counter: {
+                    past: [],
+                    present: 0,
+                    future: [1,2,3,4,5],
+                },
+                successloan:{
+                    loan_name: null,
+                    due_date: null,
+                    balance: null,
+                    payment: null,
+                    number_of_installments: null,
+                    approve: false,
+                },
             }
         }
 	}

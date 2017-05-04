@@ -3,11 +3,9 @@ import React from "react";
 
 import {bindActionCreators} from "redux";
 import { connect } from "react-redux";
-import {redo, postApplyLoan, undo } from "../actions/applyLoanActions";
-
+import {redo, postApplication, undo, saveApplication, resetState } from "../actions/applyLoanActions";
 
 @connect((store) => {
-
   return {
     application: store.application.application,
     successloan: store.successloan.successloan,
@@ -28,27 +26,36 @@ import {redo, postApplyLoan, undo } from "../actions/applyLoanActions";
 event.preventDefault();
     }
     handleRedo(event){
-
+        if (this.props.counter['present']==4){
+            console.log("MAKE A POST REQUEST")
+            this.props.dispatch(postApplication(this.props.application))
+            event.preventDefault();
+        }
+        if(this.props.counter['present']==5){
+            this.props.dispatch(resetState())
+            event.preventDefault();
+            return;
+        }
         this.props.dispatch(redo());
       event.preventDefault();
     
     }
     handleAmount(val){
-
-        console.log(val);
+        this.props.dispatch(saveApplication(val))
     }
 
     render(){
 
-    const { dispatch } = this.props;
-    const undo = bindActionCreators(postApplyLoan, dispatch);
+    
     let buttona = null;
     let buttonb = null;
-    if (this.props.counter['present']!=4) {
-    buttona=<button type class="btn btn-primary btn-lg" onClick={this.handleUndo.bind(this)}>UNDO</button>
-    buttonb=<input type="submit" class="btn btn-primary btn-lg" value="PROCEED" />
-    } else {
-      buttona=<button class="btn btn-primary btn-lg" onClick={this.handleUndo.bind(this)}>UNDO</button>
+    if (this.props.counter['present']!=5){
+        if (this.props.counter['present']!=4) {
+        buttona=<button type class="btn btn-primary btn-lg" onClick={this.handleUndo.bind(this)}>UNDO</button>
+        buttonb=<input type="submit" class="btn btn-primary btn-lg" value="PROCEED" />
+        } else {
+            buttona=<button class="btn btn-primary btn-lg" onClick={this.handleUndo.bind(this)}>UNDO</button>
+            }
     }
     return(
           <div>
@@ -58,7 +65,8 @@ event.preventDefault();
     <legend>Apply A Loan</legend>
     
 
-    <DummyApplyLoan counter={this.props.counter['present']} onHandleAmount={this.handleAmount}/>
+    <DummyApplyLoan counter={this.props.counter['present']} onHandleAmount={this.handleAmount.bind(this)} 
+    currentState={this.props.application}/>
     
 
      <center>
@@ -76,54 +84,61 @@ event.preventDefault();
 
 
 class DummyApplyLoan extends React.Component {
-    constructor(){
-        super();
-        this.state = {
-          balance:0,
-          limit:100000,
-          LoanType:"MORTGAGE",
-          LoanAmount: null,
-          LoanDuration: "MONTHLY",
-          NumberofInstallment: null,
-        }    
+    constructor(props){
+        super(props);
+        
+        this.state = props.currentState
        }
     handleAmount(e){
     switch(this.props.counter){
         case 0 : { 
             switch(e.target.value){
-                case "MORTGAGE": this.setState({limit: 100000, LoanType: "MORTGAGE"}) 
+                case "MORTGAGE": this.setState({limit: 100000, loan_name: "MORTGAGE"}) 
             }
             switch(e.target.value){
-                case "AUTO": this.setState({limit: 1000000, LoanType: "AUTO"})
+                case "AUTO": this.setState({limit: 1000000, loan_name: "AUTO"})
             }
             switch(e.target.value){
-                case "PERSONAL": this.setState({limit: 20000, LoanType: "PERSONAL"})
+                case "PERSONAL": this.setState({limit: 20000, loan_name: "PERSONAL"})
             }
             switch(e.target.value){
-                case "HOME": this.setState({limit: 1500000, LoanType: "HOME"})
+                case "HOME": this.setState({limit: 1500000, loan_name: "HOME"})
             }
             switch(e.target.value){
-                case "STUDENT": this.setState({limit: 50000, LoanType: "STUDENT"})
+                case "STUDENT": this.setState({limit: 50000, loan_name: "STUDENT"})
             }
         }
         case 1 : {
-            var x = e.target.value * 1.2
-            this.setState({balance : x, LoanAmount: e.target.value })
+            var x = (e.target.value * 1.2).toFixed(2);
+            this.setState({balance : x, loan_amount: e.target.value })
         }
         case 2 : {
                        
             switch(e.target.value){
-                case "MONTHLY": this.setState({LoanDuration : "MONTHLY"})
-            }
-            switch(e.target.value){
-                case "SEMI-ANNUALLY": this.setState({LoanDuration: "SEMI-ANNUALLY",})
-            }
-            switch(e.target.value){
-                case "ANNUALLY": this.setState({LoanDuration: "ANNUALLY",})
-                }          
+                case "MONTHLY": {this.setState({payment : "MONTHLY"})
+                
+                break;}
+                case "SEMI-ANNUALLY": {this.setState({payment: "SEMI-ANNUALLY",})
+                
+                break;} 
+                case "ANNUALLY": {this.setState({payment: "ANNUALLY",})
+                
+                break;  }
+                }
         }
         case 3 : {
-            this.setState({NumberofInstallment: e.target.value})
+             switch(this.state.payment){
+                case "MONTHLY": {
+                  
+                  break;}
+                case "SEMI-ANNUALLY": {
+                  
+                break;} 
+                case "ANNUALLY": {
+                  
+                break;  }
+                }
+            this.setState({number_of_installments: e.target.value})
         }
         case 5 : {
             //this.props.onHandleAmount(this.state)
@@ -132,7 +147,7 @@ class DummyApplyLoan extends React.Component {
 
 
 
-        this.props.onHandleAmount(this.state.balance)
+        this.props.onHandleAmount(this.state)
     }
     handleSubmit(e){
 
@@ -152,7 +167,7 @@ class DummyApplyLoan extends React.Component {
                          <div class="form-group">
                           <label for="select" class="col-lg-2 control-label">Loan Type</label>
                           <div class="col-lg-10">
-                            <select class="form-control" id="select" value={this.state.LoanType} ref="loan_name" onChange={this.handleAmount.bind(this)} >
+                            <select class="form-control" id="select" value={this.state.loan_name} ref="loan_name" onChange={this.handleAmount.bind(this)} >
                               <option >MORTGAGE</option>
                               <option >PERSONAL</option>
                               <option>AUTO</option>
@@ -183,7 +198,7 @@ class DummyApplyLoan extends React.Component {
                 <div class="form-group">
                   <label for="inputnumber" class="col-lg-2 control-label" >Loan Type</label>
                   <div class="col-lg-10">
-                    <p>{this.state.LoanType}</p>
+                    <p>{this.state.loan_name}</p>
                   </div>
                 </div>
                  <div class="form-group">
@@ -216,13 +231,13 @@ class DummyApplyLoan extends React.Component {
                         <div class="form-group">
                           <label for="inputnumber" class="col-lg-2 control-label" >Loan Type</label>
                           <div class="col-lg-10">
-                            <p>{this.state.LoanType}</p>
+                            <p>{this.state.loan_name}</p>
                           </div>
                         </div>
                         <div class="form-group">
                           <label for="inputnumber" class="col-lg-2 control-label" >LOAN AMOUNT</label>
                           <div class="col-lg-10">
-                            <p>{this.state.LoanAmount}</p>
+                            <p>{this.state.loan_amount}</p>
                           </div>
                         </div>
                         <div class="form-group">
@@ -252,19 +267,19 @@ class DummyApplyLoan extends React.Component {
                     <div class="form-group">
                       <label for="inputnumber" class="col-lg-2 control-label" >Loan Type</label>
                       <div class="col-lg-10">
-                        <p>{this.state.LoanType}</p>
+                        <p>{this.state.loan_name}</p>
                       </div>
                     </div>
                     <div class="form-group">
                       <label for="inputnumber" class="col-lg-2 control-label" >LOAN AMOUNT</label>
                       <div class="col-lg-10">
-                        <p>{this.state.LoanAmount}</p>
+                        <p>{this.state.loan_amount}</p>
                       </div>
                     </div>
                     <div class="form-group">
                       <label for="inputnumber" class="col-lg-2 control-label" >LOAN DURATION</label>
                       <div class="col-lg-10">
-                        <p>{this.state.LoanDuration}</p>
+                        <p>{this.state.payment}</p>
                       </div>
                     </div>
                     <div class="form-group">
@@ -297,25 +312,25 @@ class DummyApplyLoan extends React.Component {
                     <div class="form-group">
                       <label for="inputnumber" class="col-lg-2 control-label" >Loan Type</label>
                       <div class="col-lg-10">
-                        <p>{this.state.LoanType}</p>
+                        <p>{this.state.loan_name}</p>
                       </div>
                     </div>
                     <div class="form-group">
                       <label for="inputnumber" class="col-lg-2 control-label" >LOAN AMOUNT</label>
                       <div class="col-lg-10">
-                        <p>{this.state.LoanAmount}</p>
+                        <p>{this.state.loan_amount}</p>
                       </div>
                     </div>
                     <div class="form-group">
                       <label for="inputnumber" class="col-lg-2 control-label" >LOAN DURATION</label>
                       <div class="col-lg-10">
-                        <p>{this.state.LoanDuration}</p>
+                        <p>{this.state.payment}</p>
                       </div>
                     </div>
                     <div class="form-group">
                       <label for="inputnumber" class="col-lg-2 control-label" >LOAN DURATION</label>
                       <div class="col-lg-10">
-                        <p>{this.state.NumberofInstallment}</p>
+                        <p>{this.state.number_of_installments}</p>
                       </div>
                     </div>
                        <div class="form-group">
@@ -333,6 +348,7 @@ class DummyApplyLoan extends React.Component {
                 return(
                     <div>
                     <p> CONGRATULATION YOU </p>
+                    <button>VIEW LOANS </button>
                     </div>
                     )
             }
