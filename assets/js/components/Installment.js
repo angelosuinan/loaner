@@ -37,10 +37,10 @@ export default class Installment extends React.Component{
         this.setState({present:  x});
         }
     }
-    handleSubmit(event){
+    handleSubmit(value){
         const { loans } = this.props;
         const {present} = this.state;
-        this.props.dispatch(postLoanInstallments(loans, present, this.refs.inputInst.value));
+        this.props.dispatch(postLoanInstallments(loans, present, value));
         event.preventDefault();       
     }
     payAnother(props){
@@ -77,6 +77,25 @@ export default class Installment extends React.Component{
                 <button class="btn btn-info btn-arrow-left" onClick={this.handleLeft.bind(this)}>left</button>
                 <button class="btn btn-info btn-arrow-right" onClick={this.handleRight.bind(this)}>right</button>
                 </center>
+                
+         
+        <InstallmentDumb loanitem={loanitem} passSubmit={this.handleSubmit.bind(this)} />
+       
+        </div>
+        );
+      }
+    }
+class InstallmentDumb extends React.Component {
+    handleSubmit(e){
+        const { passSubmit } = this.props;
+        passSubmit(this.refs.inputInst.value)
+    }
+    render(){
+        const {loanitem, passSubmit} = this.props;
+
+
+        return(
+            <div>
             <div class="loans-div">
 
                 {loanitem}          
@@ -92,20 +111,17 @@ export default class Installment extends React.Component{
                     </div>
                 </div>
                 <div class="form-group">
-                      <div class="col-lg-10 col-lg-offset-2">
-                        <button type="reset" class="btn btn-default">Cancel</button>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                      </div>
+                    <div class="col-lg-10 col-lg-offset-2">
+                    <button type="reset" class="btn btn-default">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
                     </div>
-              </fieldset>
-          </form>
-         
-      
-       
-        </div>
-        );
-      }
+                </div>
+            </fieldset>
+            </form>
+            </div>
+            )
     }
+}
 var get_next_installment = function(value){
   var min =0;
   if (value['number_of_installments'] != 0){
