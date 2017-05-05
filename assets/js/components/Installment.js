@@ -64,7 +64,7 @@ export default class Installment extends React.Component{
             )
         }
         if(!loans.length){
-        return <p> No Existing Loans</p>
+        return <p> No Approved Loans</p>
         }  
         var loan = loans[this.state.present];
         var min = get_next_installment(loan);

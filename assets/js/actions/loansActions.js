@@ -12,4 +12,9 @@ export function fetchLoans () {
 		}
 }
 
-
+export function sortLoanName(value) {
+	return{
+		type: "SORT_LOAN_NAME",
+		payload: value,
+	}
+}

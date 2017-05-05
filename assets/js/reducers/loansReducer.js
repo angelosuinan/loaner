@@ -9,6 +9,9 @@ export default function reducer(state={
         number_of_installments: null,
         approve: null,
 	},
+	sort:{
+		loan_name: "ALL",
+	},
 	fetching: false,
 	fetched: false,
 	error: null,
@@ -28,6 +31,21 @@ export default function reducer(state={
           fetched: true,
           loans: action.payload,
         	}	
+		}
+		case "SORT_LOAN_NAME" : {
+            const {loans} =state;
+            var filtered = loans;
+            if(action.payload!= "ALL")
+			filtered = loans.filter(function(x){
+            	return x.loan_name ==action.payload
+            	});
+            
+			return {
+				...state,
+				sort:{ ...state.sort, loan_name: action.payload},
+                loans: filtered,
+				
+			}
 		}
 	}
 
