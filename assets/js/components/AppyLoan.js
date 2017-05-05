@@ -48,14 +48,14 @@ export default class AppyLoan extends React.Component{
     let buttonb = null;
     if (this.props.counter['present']!=5){
         if (this.props.counter['present']!=4) {
-            buttona=<button type class="btn btn-primary btn-lg" onClick={this.handleUndo.bind(this)}>UNDO</button>
-            buttonb=<input type="submit" class="btn btn-primary btn-lg" value="PROCEED" />
+            buttona=<button type class="btn btn-info" onClick={this.handleUndo.bind(this)}>UNDO</button>
+            buttonb=<input type="submit" class="btn btn-info" value="PROCEED" />
         }else{
             buttona=<button class="btn btn-primary btn-lg" onClick={this.handleUndo.bind(this)}>UNDO</button>
         }
     }
     return(
-        <div>
+        <div class="form">
             <form class="form-horizontal" onSubmit={this.handleRedo.bind(this)}>
             <fieldset>
             <legend>Apply A Loan</legend>
@@ -173,7 +173,12 @@ class DummyApplyLoan extends React.Component {
         switch(this.props.counter){
             case 0 : {
                 return(
-                        <div>
+
+                        <div class="form">
+                        <div class="progress progress-striped active">
+                                  <div class="progress-bar" style={{width:"0%"}}></div>
+                        </div>
+                        
                         <div class="form-group">
                           <label for="inputnumber" class="col-lg-2 control-label" >PAYMENT</label>
                           <div class="col-lg-10">
@@ -204,7 +209,10 @@ class DummyApplyLoan extends React.Component {
             }
             case 1 : {
                 return(
-                <div>
+                <div class="form">
+                <div class="progress progress-striped active">
+                          <div class="progress-bar" style={{width:"20%"}}></div>
+                </div>
                 <div class="form-group">
                   <label for="inputnumber" class="col-lg-2 control-label" >PAYMENT</label>
                   <div class="col-lg-10">
@@ -236,7 +244,10 @@ class DummyApplyLoan extends React.Component {
             }
             case 2 : {
                 return(
-                    <div>
+                    <div class="form">
+                    <div class="progress progress-striped active">
+                      <div class="progress-bar" style={{width:"40%"}}></div>
+                    </div>
                     <div class="form-group">
                       <label for="inputnumber" class="col-lg-2 control-label" >PAYMENT</label>
                       <div class="col-lg-10">
@@ -273,7 +284,10 @@ class DummyApplyLoan extends React.Component {
             }
             case 3 : {
                 return(
-                <div>
+                <div class="form">
+                    <div class="progress progress-striped active">
+                      <div class="progress-bar" style={{width:"60%"}}></div>
+                    </div>
                     <div class="form-group">
                       <label for="inputnumber" class="col-lg-2 control-label" >PAYMENT</label>
                       <div class="col-lg-10">
@@ -313,7 +327,10 @@ class DummyApplyLoan extends React.Component {
             }
             case 4 : {
                 return(
-                    <div>
+                    <div class="form">
+                    <div class="progress progress-striped active">
+                      <div class="progress-bar" style={{width:"80%"}}></div>
+                    </div>
                     <div class="form-group">
                       <label for="inputnumber" class="col-lg-2 control-label" >PAYMENT</label>
                       <div class="col-lg-10">
@@ -363,7 +380,10 @@ class DummyApplyLoan extends React.Component {
             }
             case 5 : {
                 return(
-                    <div>
+                    <div class="form">
+                    <div class="progress progress-striped active">
+                      <div class="progress-bar" style={{width:"100%"}}></div>
+                    </div>
                     <center>
                     <p> CONGRATULATION ON YOUR APPLICATION. PLEASE WAIT APPROXIMATELY 24 HOURS FOR APPROVAL </p>
                     <button>VIEW LOANS </button>

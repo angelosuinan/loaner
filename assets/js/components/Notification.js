@@ -62,11 +62,16 @@ class NotificationDumb extends React.Component {
     const {actions, x} = this.props;
     return (
 
-      <ul key = {x.pk}>
-        <div class="alert alert-dismissible alert-success">
+      <ul key = {x.pk} >
+        <div class="notifications">
+
+        <div class="alert alert-dismissible alert-info">
+        <div class="notifications">
           <button type="button" class="close" data-dismiss="alert">&times;</button>
           <strong>Congratulations!</strong> 
          <p onClick={() => actions(x.loan)} >Your Loan with an id number has {x.loan} been approved</p>       
+        </div>
+        </div>
         </div>
 
       </ul>

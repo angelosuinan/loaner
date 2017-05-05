@@ -74,8 +74,8 @@ export default class Installment extends React.Component{
         return(
             <div>
                 <center>
-                <button class="left" onClick={this.handleLeft.bind(this)}>left</button>
-                <button class="right" onClick={this.handleRight.bind(this)}>right</button>
+                <button class="btn btn-info btn-arrow-left" onClick={this.handleLeft.bind(this)}>left</button>
+                <button class="btn btn-info btn-arrow-right" onClick={this.handleRight.bind(this)}>right</button>
                 </center>
             <div class="loans-div">
 

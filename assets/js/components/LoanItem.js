@@ -17,13 +17,13 @@ export default class LoanItem extends React.Component {
                 </div> 
                 <div class="spanel-body"> 
                   <div class="list-group"> 
-                    <a href="#" class="list-group-item active"> 
+                    <a href="#" class="list-group-item "> 
                       Nearest Due date: {loan.due_date}
                     </a> 
                     <a href="#" class="list-group-item"> 
                     Payment Method: {loan.payment} 
                     </a> 
-                    <a href="#" class="list-group-item active"> 
+                    <a href="#" class="list-group-item "> 
                     Balance: {loan.balance}
                     </a> 
                     <a href="#" class="list-group-item "> 
