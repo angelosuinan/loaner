@@ -9,6 +9,16 @@ export default function reducer(state={
         number_of_installments: null,
         approve: null,
 	},
+	loans_sorted: {
+		pk: null,
+        loan_name: null,
+        due_date: null,
+        loanee: null,
+        balance: null,
+        payment: null,
+        number_of_installments: null,
+        approve: null,
+	},
 	sort:{
 		loan_name: "ALL",
 	},
@@ -43,7 +53,7 @@ export default function reducer(state={
 			return {
 				...state,
 				sort:{ ...state.sort, loan_name: action.payload},
-                loans: filtered,
+                loans_sorted: filtered,
 				
 			}
 		}

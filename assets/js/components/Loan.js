@@ -2,7 +2,7 @@ import React from "react";
 import LoanItem from "./LoanItem"
 
 import { connect } from "react-redux";
-import ReactBootstrapSlider from 'react-bootstrap-slider';
+var Slider = require("bootstrap-slider");
 import { fetchLoans, sortLoanName } from "../actions/loansActions";
 
 
@@ -10,7 +10,8 @@ import { fetchLoans, sortLoanName } from "../actions/loansActions";
 
   return {
     loans: store.loans.loans,
-    fetched: store.loans.fetched
+    fetched: store.loans.fetched,
+    loans_sorted: store.loans_sorted.loans_sorted
   }
 })
 export default class Loan extends React.Component{
@@ -21,28 +22,34 @@ export default class Loan extends React.Component{
 
     handleSortLoanName(value) {
         const { dispatch} = this.props
-        dispatch(fetchLoans())
-        setTimeout(function(){ dispatch(sortLoanName(value))}, 100);
+        dispatch(sortLoanName(value))
         
                 
     }
+    handleSort(e) {
+        const { handleSortLoanName} = this.props;
+        this.handleSortLoanName(e.target.value)
+    }
 
     render(){
-        const { loans } = this.props;
-
+        const { loans , loans_sorted } = this.props;
+        
      
                 
         if(!loans.length){
-        return <p> No Existing Loans</p>
+        return <div><p> No Existing Loans</p><button onClick={this.handleSort.bind(this)} value="ALL">UNDO</button></div>
         }
-        
+        var to_show_loans = loans;
+        if(loans_sorted.length){ 
+            to_show_loans =loans_sorted;
+        }
    
         return(
                  
         
         <div id ="loansdiv">
         
-          <LoanDumb loans={loans} handleSortLoanName={this.handleSortLoanName.bind(this)}/>
+          <LoanDumb loans={to_show_loans} handleSortLoanName={this.handleSortLoanName.bind(this)}/>
         </div>
        
        
