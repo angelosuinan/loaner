@@ -2,47 +2,42 @@ import React from "react";
 
 
 export default class LoanItem extends React.Component {
-
-
   render() {
-    
    var loan = this.props.loan;
- 
    var min = get_next_installment(loan);
- 
    return(
-    <div id="jumbo" class="panel panel-primary"> 
-                <div class="panel-heading"> 
-                  <h1 class="panel-title">{loan.loan_name}</h1> 
-                </div> 
-                <div class="spanel-body"> 
-                  <div class="list-group"> 
-                    <a href="#" class="list-group-item "> 
-                      Nearest Due date: {loan.due_date}
-                    </a> 
-                    <a href="#" class="list-group-item"> 
-                    Payment Method: {loan.payment} 
-                    </a> 
-                    <a href="#" class="list-group-item "> 
-                    Balance: {loan.balance}
-                    </a> 
-                    <a href="#" class="list-group-item "> 
-                    Remaining Installment: {loan.number_of_installments}
-                    </a> 
-                    <a href="#" class="list-group-item "> 
-                    Next Installment: {min} 
-                    </a> 
-                  
-                    <a href="#" class="list-group-item "> 
-                    Installments: installments
-                    </a> 
-                    <a href="#" class="list-group-item "> 
-                    Approve: {String(loan.approve)}
-                    </a> 
-                  </div> 
-                </div> 
-              </div>
-      
+    <div id="jumbo" class="panel panel-primary">
+      <div class="panel-heading">
+        <h1 class="panel-title"> {loan.loan_name} </h1>
+      </div>
+      <div class="spanel-body">
+        <div class="list-group">
+          <a href="#" class="list-group-item ">
+            Nearest Due date: {loan.due_date}
+          </a>
+          <a href="#" class="list-group-item">
+            Payment Method: {loan.payment}
+          </a>
+          <a href="#" class="list-group-item ">
+            Balance: {loan.balance}
+          </a>
+          <a href="#" class="list-group-item ">
+            Remaining Installment: {loan.number_of_installments}
+          </a>
+          <a href="#" class="list-group-item ">
+            Next Installment: {min}
+          </a>
+
+          <a href="#" class="list-group-item ">
+            Installments: installments
+          </a>
+          <a href="#" class="list-group-item ">
+            Approve: {String(loan.approve)}
+          </a>
+        </div>
+      </div>
+    </div>
+
     )
   }
 }

@@ -10,13 +10,14 @@ import counter from "./applyLoanReducer";
 import sort from "./loansReducer";
 import loans_sorted from "./loansReducer";
 
+
 export default combineReducers({
-    loans,
-    installments,
-    notifications,
-    loanNotif,
-    application,
-    successloan,
-    counter,
-    loans_sorted,
+  loans,
+  installments,
+  notifications,
+  loanNotif,
+  application,
+  successloan,
+  counter,
+  loans_sorted,
 });

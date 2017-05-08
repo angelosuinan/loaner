@@ -14,20 +14,20 @@ import {LoanType } from "./components/AppyLoan";
 
 import store from "./store";
 
-const app = document.getElementById('app')
+const app = document.getElementById('app');
 
 ReactDOM.render(
-	<Provider store={store} >
-        <Router history ={hashHistory}> 
-           <Route path="/"  component={Layout}>
-	           <IndexRoute component={Loan}></IndexRoute>
-	           <Route path="loan" component={Loan}></Route>
-	           <Route path="appyLoan" component={AppyLoan}></Route>
-	           <Route path="installment" component={Installment}></Route>
-	           <Route path="notification" component={Notification}></Route>
-	           <Route path="individualloan" component={LoanItem}></Route>
-	           <Route path="LoanType" component={LoanType}></Route>
-           </Route>           
-  		</Router>
-  	</Provider>
+  <Provider store={store} >
+    <Router history ={hashHistory}>
+      <Route path="/"  component={Layout}>
+        <IndexRoute component={Loan}></IndexRoute>
+        <Route path="loan" component={Loan}></Route>
+        <Route path="appyLoan" component={AppyLoan}></Route>
+        <Route path="installment" component={Installment}></Route>
+        <Route path="notification" component={Notification}></Route>
+        <Route path="individualloan" component={LoanItem}></Route>
+        <Route path="LoanType" component={LoanType}></Route>
+      </Route>
+    </Router>
+  </Provider>
   ,app);
