@@ -1,4 +1,4 @@
-export default function reducer(action, state={
+export default function reducer( state={
 	installments: {
 	  pk: null,
 	  loan_name: null,
@@ -14,7 +14,7 @@ export default function reducer(action, state={
 	posting: false,
 	posted: false,
 	error: null,
-}){
+}, action){
 	switch (action.type){
 		case "FETCHED_LOANS_INSTALLMENT": {
 			return {...state, fetching:true, }

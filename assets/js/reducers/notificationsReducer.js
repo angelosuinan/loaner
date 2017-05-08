@@ -1,4 +1,4 @@
-export default function reducer(action, state={
+export default function reducer( state={
 	notifications: {
 		pk: null,
 		loan: null,
@@ -17,7 +17,7 @@ export default function reducer(action, state={
 		number_of_installments: null,
 		approve: null,
 	},
-}){
+}, action){
 	switch (action.type){
 		case "FETCHED_NOTIFICATIONS": {
 			return {...state, fetching:true, }

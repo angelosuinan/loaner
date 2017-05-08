@@ -1,4 +1,4 @@
-export default function reducer(action, state={
+export default function reducer(state={
 	application: {
 		balance: 0,
 		loan_name: "MORTGAGE",
@@ -23,7 +23,7 @@ export default function reducer(action, state={
 	fetching: false,
 	fetched: false,
 	error: null,
-	}) {
+}, action, ) {
 	switch (action.type) {
 		case "POSTED_APPLY_LOAN": {
 			return {...state, posting:true };
